@@ -31,6 +31,7 @@ class applicant(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('N', 'Rather Not Say')
     )
     gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True)
     Title_ch = (
@@ -42,19 +43,28 @@ class applicant(models.Model):
     title = models.CharField(max_length=5,choices=Title_ch,null=True)
     father = models.CharField(max_length=40,null=True)
     mother = models.CharField(max_length=40,null=True)
-    Cat_ch = (
+    CAT_CHOICES = (
         ('1','GEN'),
         ('2','SC'),
         ('3','ST'),
         ('4','OBC'),
     )
-    category = models.CharField(max_length=5,choices=Cat_ch,null=True)
-    Nationality = models.CharField(max_length=30,null=True)
+    category = models.CharField(max_length=5,choices=CAT_CHOICES,null=True)
+    Nationality = models.CharField(max_length=30,choices=NATIONALITY_CHOICES,null=True)
+    NATIONALITY_CHOICES=(
+        ('1','Australia'),
+        ('2','Brazil'),
+        ('3','India.'),
+        ('4','USA'),
+    )
     qual = (
         ('1','B.A.'),
         ('2','B.Arch.'),
-        ('3','ST'),
-        ('4','OBC'),
+        ('3','BSc'),
+        ('4','MSc'),
+        ('5','B.Tech'),
+        ('6','M.Tech'),
+        ('7','PhD'),
     )
 
 
