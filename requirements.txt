@@ -1,0 +1,6 @@
+django
+djangorestframework
+requests
+django-cors-headers
+psycopg2
+PyJWT
