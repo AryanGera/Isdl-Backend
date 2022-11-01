@@ -32,24 +32,24 @@ class applicant(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True)
     Title_ch = (
         ('1','Mrs.'),
         ('2','Mr.'),
         ('3','Dr.'),
         ('4','Ms.'),
     )
-    title = models.CharField(max_length=5,choices=Title_ch)
-    father = models.CharField(max_length=40)
-    mother = models.CharField(max_length=40)
+    title = models.CharField(max_length=5,choices=Title_ch,null=True)
+    father = models.CharField(max_length=40,null=True)
+    mother = models.CharField(max_length=40,null=True)
     Cat_ch = (
         ('1','GEN'),
         ('2','SC'),
         ('3','ST'),
         ('4','OBC'),
     )
-    category = models.CharField(max_length=5,choices=Cat_ch)
-    Nationality = models.CharField(max_length=30)
+    category = models.CharField(max_length=5,choices=Cat_ch,null=True)
+    Nationality = models.CharField(max_length=30,null=True)
     qual = (
         ('1','B.A.'),
         ('2','B.Arch.'),
