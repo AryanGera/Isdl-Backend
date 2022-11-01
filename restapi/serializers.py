@@ -24,10 +24,6 @@ class ApplicantSerializer(serializers.Serializer):
     class Meta:
         model=applicant
         fields='__all__'
-class ApplicantSerializer(serializers.Serializer):
-    class Meta:
-        model=applicant
-        fields='__all__'
 class JobSerializer(serializers.Serializer):
     class Meta:
         model=job_App
