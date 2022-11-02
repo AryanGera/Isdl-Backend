@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class spez(models.Model):
     name = models.CharField(max_length=50)
+    
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
@@ -78,4 +79,4 @@ class application(models.Model):
     mob_num = models.CharField(max_length=10,null=True)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
     user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
-
+    schedule = models.DateTimeField(null=True)

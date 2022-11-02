@@ -62,3 +62,22 @@ def update_Application(request):
     
 # @api_view(['POST'])
 # def update_Application(request):
+
+@api_view(['POST'])
+def delete_app(request):
+    job.objects.filter(id=request.data.get("id")).delete()
+
+@api_view(['POST'])
+def nextRnd(request):
+    jb=job.objects.filter(id=request.data.get("id"))
+    jb.round+=1
+    jb.save()
+
+@api_view(['POST'])
+def schedule(request):
+    jb=job.objects.filter(id=request.data.get("id"))
+    jb.schedule = request.data.get("datetime")
+    jb.save()
+
+@api_view(['GET'])
+def get_details(request):
