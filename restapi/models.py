@@ -22,7 +22,12 @@ class job_App(models.Model):
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1)
     phd_Req = models.BooleanField(default=False)
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
-class applicant(models.Model):
+    cse_Acess = models.BooleanField(default=False)
+    mec_Acess = models.BooleanField(default=False)
+    cce_Acess = models.BooleanField(default=False)
+    ece_Acess = models.BooleanField(default=False)
+    hum_Acess = models.BooleanField(default=False)
+class application(models.Model):
     user = models.OneToOneField('User',related_name='applicant',on_delete=models.CASCADE)
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
     application = models.ForeignKey(job_App,on_delete=models.PROTECT)
@@ -50,13 +55,8 @@ class applicant(models.Model):
         ('4','OBC'),
     )
     category = models.CharField(max_length=5,choices=CAT_CHOICES,null=True)
-    Nationality = models.CharField(max_length=30,choices=NATIONALITY_CHOICES,null=True)
-    NATIONALITY_CHOICES=(
-        ('1','Australia'),
-        ('2','Brazil'),
-        ('3','India.'),
-        ('4','USA'),
-    )
+    Nationality = models.CharField(max_length=30,null=True)
+    
     qual = (
         ('1','B.A.'),
         ('2','B.Arch.'),
@@ -66,16 +66,14 @@ class applicant(models.Model):
         ('6','M.Tech'),
         ('7','PhD'),
     )
+    Nationality = models.CharField(max_length=30,choices=qual,null=True)
+
 
 
 
 class admin(models.Model):
     user = models.OneToOneField('User',related_name='admin',on_delete=models.CASCADE)
-    cse_Acess = models.BooleanField(default=False)
-    mec_Acess = models.BooleanField(default=False)
-    cce_Acess = models.BooleanField(default=False)
-    ece_Acess = models.BooleanField(default=False)
-    hum_Acess = models.BooleanField(default=False)
+    
     
 
     
