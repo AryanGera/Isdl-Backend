@@ -48,11 +48,12 @@ def grant_Perms(request):
     # ul = UserSerializer(data=request.data)
     email = request.data.get("email")
     user = User.objects.filter(email=email).first()
-    user.cse_Acess = request.data.get("cse")
-    user.ece_Acess = request.data.get("ece")
-    user.cce_Acess = request.data.get("cce")
-    user.mec_Acess = request.data.get("mec")
-    
+    user.cse_Acess = (request.data.get("cse")=="True")
+    user.ece_Acess = (request.data.get("ece")=="True")
+    user.cce_Acess = (request.data.get("cce")=="True")
+    user.mec_Acess = (request.data.get("mec")=="True")
+    user.save()
+    return Response({"good":"response"})
 
 
 def Decode(token):

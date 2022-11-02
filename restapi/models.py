@@ -8,6 +8,16 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class spez(models.Model):
     name = models.CharField(max_length=50)
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=30)
+    password = models.CharField(max_length=256)
+    cse_Acess = models.BooleanField(default=False)
+    mec_Acess = models.BooleanField(default=False)
+    cce_Acess = models.BooleanField(default=False)
+    ece_Acess = models.BooleanField(default=False)
+    USERNAME_FIELD ="email"
+    REQUIRED_FIELDS = []
 class job(models.Model):
     dept_name = models.CharField(max_length=45,null=True)
     post = models.CharField(max_length=30,null=True)
@@ -17,8 +27,8 @@ class job(models.Model):
     createdby = models.CharField(max_length=30,null=True)
     
 class application(models.Model):
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
-    job = models.ForeignKey(job,on_delete=models.PROTECT)
+    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT,null=True)
+    job = models.ForeignKey(job,on_delete=models.PROTECT,null=True)
     dob = models.DateField()
     age = models.PositiveBigIntegerField()
     GENDER_CHOICES = (
@@ -66,16 +76,6 @@ class application(models.Model):
     postal = models.CharField(max_length=50,null=True)
     pincode = models.CharField(max_length=6,null=True)
     mob_num = models.CharField(max_length=10,null=True)
+    hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
+    user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
 
-
-class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=30)
-    password = models.CharField(max_length=256)
-    cse_Acess = models.BooleanField(default=False)
-    mec_Acess = models.BooleanField(default=False)
-    cce_Acess = models.BooleanField(default=False)
-    ece_Acess = models.BooleanField(default=False)
-    application = models.ForeignKey(application,on_delete=models.CASCADE,null=True)
-    USERNAME_FIELD ="email"
-    REQUIRED_FIELDS = []
