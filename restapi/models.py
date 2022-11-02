@@ -12,7 +12,7 @@ class job(models.Model):
     dept_name = models.CharField(max_length=45,null=True)
     post = models.CharField(max_length=30,null=True)
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
-    phd_Req = models.BooleanField(default=False,null=True)
+    # phd_Req = models.BooleanField(default=False,null=True)
     # spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
     createdby = models.CharField(max_length=30,null=True)
     
@@ -72,11 +72,10 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
     password = models.CharField(max_length=256)
-    USERNAME_FIELD ="email"
-    REQUIRED_FIELDS = []
     cse_Acess = models.BooleanField(default=False)
     mec_Acess = models.BooleanField(default=False)
     cce_Acess = models.BooleanField(default=False)
     ece_Acess = models.BooleanField(default=False)
-    hum_Acess = models.BooleanField(default=False)
     application = models.ForeignKey(application,on_delete=models.CASCADE,null=True)
+    USERNAME_FIELD ="email"
+    REQUIRED_FIELDS = []

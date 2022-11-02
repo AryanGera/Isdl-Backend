@@ -3,11 +3,15 @@ from restapi.models import User
 from restapi.models import application
 from restapi.models import job
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields='__all__'
 
 class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['email','password']
+        fields=['id','email','password','name']
         extra_kwargs={
             'password':{'write_only':True}
         }
@@ -18,6 +22,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model=job
