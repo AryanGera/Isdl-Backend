@@ -1,5 +1,5 @@
 from django.urls import path,re_path
-from .views import api_home, logout,register,login, userView
+from .user_views import create_job
 urlpatterns = [
-    path()
+    path('create_job',create_job)
 ]

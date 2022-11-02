@@ -1,9 +1,7 @@
-
-from dataclasses import fields
 from rest_framework import serializers
 from restapi.models import User
-from restapi.models import applicant
-from restapi.models import job_App
+from restapi.models import application
+from restapi.models import job
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
@@ -20,11 +18,12 @@ class UserLoginSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
-class ApplicantSerializer(serializers.Serializer):
+class JobSerializer(serializers.ModelSerializer):
     class Meta:
-        model=applicant
-        fields='__all__'
-class JobSerializer(serializers.Serializer):
+        model=job
+        fields=['dept_name','post']
+
+class application_Serializer(serializers.ModelSerializer):
     class Meta:
-        model=job_App
+        model = application
         fields='__all__'

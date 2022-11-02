@@ -8,26 +8,13 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class spez(models.Model):
     name = models.CharField(max_length=50)
-
-class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=30)
-    password = models.CharField(max_length=256)
-    USERNAME_FIELD ="email"
-    REQUIRED_FIELDS = []
-    cse_Acess = models.BooleanField(default=False)
-    mec_Acess = models.BooleanField(default=False)
-    cce_Acess = models.BooleanField(default=False)
-    ece_Acess = models.BooleanField(default=False)
-    hum_Acess = models.BooleanField(default=False)
-    application = models.ForeignKey(application,on_delete=models.CASCADE)
 class job(models.Model):
-    dept_name = models.CharField(max_length=45)
-    post = models.CharField(max_length=30)
-    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1)
-    phd_Req = models.BooleanField(default=False)
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
-    createdby = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    dept_name = models.CharField(max_length=45,null=True)
+    post = models.CharField(max_length=30,null=True)
+    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
+    phd_Req = models.BooleanField(default=False,null=True)
+    # spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    createdby = models.CharField(max_length=30,null=True)
     
 class application(models.Model):
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
@@ -78,12 +65,18 @@ class application(models.Model):
     district = models.CharField(max_length=40,null=True)
     postal = models.CharField(max_length=50,null=True)
     pincode = models.CharField(max_length=6,null=True)
-    mob_num = models.CharField(max_length=10)
+    mob_num = models.CharField(max_length=10,null=True)
 
 
-
-
-
-
-
-    
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=30)
+    password = models.CharField(max_length=256)
+    USERNAME_FIELD ="email"
+    REQUIRED_FIELDS = []
+    cse_Acess = models.BooleanField(default=False)
+    mec_Acess = models.BooleanField(default=False)
+    cce_Acess = models.BooleanField(default=False)
+    ece_Acess = models.BooleanField(default=False)
+    hum_Acess = models.BooleanField(default=False)
+    application = models.ForeignKey(application,on_delete=models.CASCADE,null=True)
