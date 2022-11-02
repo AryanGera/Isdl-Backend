@@ -9,30 +9,31 @@ from django.contrib.auth.models import AbstractUser
 class spez(models.Model):
     name = models.CharField(max_length=50)
 
-
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
     password = models.CharField(max_length=256)
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
-class job_App(models.Model):
-    dept_name = models.CharField(max_length=45)
-    post = models.CharField(max_length=30)
-    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1)
-    phd_Req = models.BooleanField(default=False)
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
     cse_Acess = models.BooleanField(default=False)
     mec_Acess = models.BooleanField(default=False)
     cce_Acess = models.BooleanField(default=False)
     ece_Acess = models.BooleanField(default=False)
     hum_Acess = models.BooleanField(default=False)
-class application(models.Model):
-    user = models.OneToOneField('User',related_name='applicant',on_delete=models.CASCADE)
+    application = models.ForeignKey(application,on_delete=models.CASCADE)
+class job(models.Model):
+    dept_name = models.CharField(max_length=45)
+    post = models.CharField(max_length=30)
+    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1)
+    phd_Req = models.BooleanField(default=False)
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
-    application = models.ForeignKey(job_App,on_delete=models.PROTECT)
+    createdby = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    
+class application(models.Model):
+    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    job = models.ForeignKey(job,on_delete=models.PROTECT)
     dob = models.DateField()
-    age = models.IntegerField()
+    age = models.PositiveBigIntegerField()
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -66,14 +67,23 @@ class application(models.Model):
         ('6','M.Tech'),
         ('7','PhD'),
     )
-    Nationality = models.CharField(max_length=30,choices=qual,null=True)
+    qualifications = models.CharField(max_length=30,choices=qual,null=True)
+    cgpa = models.DecimalField(max_digits=2,decimal_places=1)
+    experiance = models.PositiveBigIntegerField()
+    citations = models.PositiveBigIntegerField()
+    publications = models.PositiveBigIntegerField()
+    country = models.CharField(max_length=40,null=True)
+    city = models.CharField(max_length=40,null=True)
+    state = models.CharField(max_length=40,null=True)
+    district = models.CharField(max_length=40,null=True)
+    postal = models.CharField(max_length=50,null=True)
+    pincode = models.CharField(max_length=6,null=True)
+    mob_num = models.CharField(max_length=10)
 
 
 
 
-class admin(models.Model):
-    user = models.OneToOneField('User',related_name='admin',on_delete=models.CASCADE)
-    
-    
+
+
 
     
