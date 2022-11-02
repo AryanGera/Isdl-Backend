@@ -69,55 +69,16 @@ def authuser(request): #returns user
         return None
     user=User.objects.get(pk=payload['id'])
     if user:
-        return Response(UserSerializer(user).data)
-    else:
-        return None
-
-def authCse(request):
-    payload=Decode(request.query_params.get('jwt',"lol"))
-    if payload==None:
-        return None #cannot auth user
-    user=User.objects.get(pk=payload['id'])
-    if user and user.cse_Acess:
-        return Response(UserSerializer(user).data)
-    else:
-        return None
-def authCse(request):
-    payload=Decode(request.query_params.get('jwt',"lol"))
-    if payload==None:
-        return None #cannot auth user
-    user=User.objects.get(pk=payload['id'])
-    if user and user.cse_Acess:
         return user
     else:
         return None
 
-def authCce(request):
+def authAdmin(request):
     payload=Decode(request.query_params.get('jwt',"lol"))
     if payload==None:
         return None #cannot auth user
     user=User.objects.get(pk=payload['id'])
-    if user and user.cce_Acess:
-        return user
-    else:
-        return None
-
-def authEce(request):
-    payload=Decode(request.query_params.get('jwt',"lol"))
-    if payload==None:
-        return None #cannot auth user
-    user=User.objects.get(pk=payload['id'])
-    if user and user.ece_Acess:
-        return user
-    else:
-        return None
-
-def authMMe(request):
-    payload=Decode(request.query_params.get('jwt',"lol"))
-    if payload==None:
-        return None #cannot auth user
-    user=User.objects.get(pk=payload['id'])
-    if user and user.mec_Acess:
+    if user and user.is_Admin and user.dept==request.data.get("check_dept"):
         return user
     else:
         return None

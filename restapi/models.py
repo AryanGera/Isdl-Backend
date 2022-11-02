@@ -9,14 +9,15 @@ from django.contrib.auth.models import AbstractUser
 class spez(models.Model):
     name = models.CharField(max_length=50)
     
+class dept(models.Model):
+    name = models.CharField(max_length=50)
+    
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
     password = models.CharField(max_length=256)
-    cse_Acess = models.BooleanField(default=False)
-    mec_Acess = models.BooleanField(default=False)
-    cce_Acess = models.BooleanField(default=False)
-    ece_Acess = models.BooleanField(default=False)
+    is_Admin = models.BooleanField(default=False)
+    dept = models.ForeignKey(dept,on_delete=models.do)
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
 class job(models.Model):
