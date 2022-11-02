@@ -42,6 +42,19 @@ def login(request):
     decode=jwt.decode(token,'secret',algorithms=['HS256'])
     response.data={'jwt':token}
     return response
+
+@api_view(['POST'])
+def grant_Perms(request):
+    # ul = UserSerializer(data=request.data)
+    email = request.data.get("email")
+    user = User.objects.filter(email=email).first()
+    user.cse_Acess = request.data.get("cse")
+    user.ece_Acess = request.data.get("ece")
+    user.cce_Acess = request.data.get("cce")
+    user.mec_Acess = request.data.get("mec")
+    
+
+
 def Decode(token):
     try:
         decode=jwt.decode(token,'secret',algorithms=['HS256'])
