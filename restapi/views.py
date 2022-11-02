@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
 from .models import User,application,job
-from .serializers import UserLoginSerializer,JobSerializer,application_Serializer
+from .serializers import UserLoginSerializer,JobSerializer,application_Serializer,UserSerializer
 
 
 def register(request):
@@ -52,10 +52,10 @@ def Decode(token):
 def authuser(request): #returns user 
     payload=Decode(request.query_params.get('jwt',"lol"))
     if payload==None:
-        return None #cannot auth user
+        return None
     user=User.objects.get(pk=payload['id'])
     if user:
-        return user
+        return Response(UserSerializer(user).data)
     else:
         return None
 
@@ -65,7 +65,7 @@ def authCse(request):
         return None #cannot auth user
     user=User.objects.get(pk=payload['id'])
     if user and user.cse_Acess:
-        return user
+        return Response(UserSerializer(user).data)
     else:
         return None
 def authCse(request):
