@@ -2,33 +2,33 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import JobSerializer,application_Serializer,UserLoginSerializer
 from .models import job,User,application,spez
-from .views import register,authuser
+from .views import register,authuser,registerM
 
 @api_view(['POST'])
 def register_Application(request):
     ass = application_Serializer(data=request.data)
-    register(request)
+    registerM(request)
     email = request.data.get("email")
-    user = User.objects.filter(email=email)
-    szName = request.data.get("sz") 
-    spez = spez.objects.filter(name=szName)
+    user = User.objects.filter(email=email).first()
+    # szName = request.data.get("sz") 
+    # spez = spez.objects.filter(name=szName)
     if ass.is_valid():
         obj = ass.save()
     else:
         return Response({"bad":"response"})
     obj.user = user
-    obj.spez_Req=spez
-    jb = job.objects.filter(id=request.data.get("job_id"))
+    # obj.spez_Req=spez
+    jb = job.objects.filter(id=request.data.get("job_id")).first()
     obj.job = jb
     hs = hireability_score(request)
     obj.hireScore = hs
     return Response({"user":"registered"})
 
 def hireability_score(request):
-    cit = request.data.get("citations")
-    pub= request.data.get("publications")
-    exp= request.data.get("experiance")
-    cpi= request.data.get("cgpa")
+    cit = float(request.data.get("citations"))
+    pub= float(request.data.get("publications"))
+    exp= float(request.data.get("experiance"))
+    cpi= float(request.data.get("cgpa"))
     normCit = cit/50
     normPub = pub/20
     normExp = exp/15

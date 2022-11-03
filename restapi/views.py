@@ -19,6 +19,13 @@ def register(request):
     serializer.save()
     return Response(serializer.data)
 
+
+def registerM(request):
+    serializer=UserLoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def login(request):
     email=request.data['email']
@@ -75,8 +82,22 @@ def authuser(request): #returns user
 
         return None
 
+def authDofa(request):
+    
+    print(request.query_params.get('jwt',None))
+    payload=Decode(request.query_params.get('jwt',"lol"))
+    if payload==None:
+        print("couldnt decode")
+        return None #cannot auth user
+    user=User.objects.get(pk=payload['id'])
+    if user and user.cse_Acess and user.ece_Acess and user.cce_Acess and user.mec_Acess:
+        return Response(UserSerializer(user).data)
+    else:
+        print("No user")
+        return None
+
 def authCse(request):
-    print("incse")
+    
     print(request.query_params.get('jwt',None))
     payload=Decode(request.query_params.get('jwt',"lol"))
     if payload==None:

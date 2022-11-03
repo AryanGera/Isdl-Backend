@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from restapi.models import User
-from restapi.models import application
-from restapi.models import job
+
+from restapi.models import job,department,User,application,spez
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,4 +30,12 @@ class JobSerializer(serializers.ModelSerializer):
 class application_Serializer(serializers.ModelSerializer):
     class Meta:
         model = application
+        fields='__all__'
+class dept_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = department
+        fields='__all__'
+class spez_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = spez
         fields='__all__'

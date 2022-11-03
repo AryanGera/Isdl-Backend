@@ -1,16 +1,20 @@
 from django.urls import path,re_path
 
 from .views import register,login,authuser,authCce,authCse,authEce,authMMe,grant_Perms
-from .admin_views import create_job,nextRnd,schedule,Fetch_Jobs
-
+from .admin_views import create_job,nextRnd,schedule,Fetch_Jobs,add_dept,add_spez
+from .application_views import register_Application
 
 urlpatterns = [
     path('cj',create_job),
+    path('ra',register_Application),
     path('fj',Fetch_Jobs),
     path('sc',schedule),
     path('nr',nextRnd),
     path('rg',register),
     path('lg',login),
     path('au',authCse),
-    path('gp',grant_Perms)
+    path('gp',grant_Perms),
+    path('ad',add_dept),
+    path('as',add_spez)
+
 ]

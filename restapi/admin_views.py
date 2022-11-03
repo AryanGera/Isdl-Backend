@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import JobSerializer,application_Serializer,UserLoginSerializer
+from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,dept_Serializer,spez_Serializer
 from .models import job,User,application,spez,department
-from .views import register,authuser,authMMe,authCce,authCse,authEce
+from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
 
 
 
@@ -155,3 +155,24 @@ def Reject(request):
         return Response({"Succesful Action":"Application Deleted"})
     else:
         return Response({"auth error":"bad auth"})
+
+@api_view(['POST'])
+def add_dept(request):
+    user = authDofa(request)
+    ds = dept_Serializer(data=request.data)
+    if user and ds.is_valid():
+        ds.save()
+        return Response(ds.data)
+    else:
+        return Response({"bad":"input"})
+
+@api_view(['POST'])
+def add_spez(request):
+    user = authDofa(request)
+    ss = spez_Serializer(data=request.data)
+    if user and ss.is_valid():
+        ss.save()
+        return Response(ss.data)
+    else:
+        return Response({"bad":"input"})
+

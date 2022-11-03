@@ -6,12 +6,13 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
-class spez(models.Model):
-    name = models.CharField(max_length=50)
-
 class department(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     code = models.CharField(max_length=3)
+
+class spez(models.Model):
+    name = models.CharField(max_length=100)
+    dept=models.ForeignKey(department,on_delete=models.DO_NOTHING)
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
@@ -25,32 +26,31 @@ class User(AbstractUser):
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
 class job(models.Model):
-    dept = models.ForeignKey(department,on_delete=models.DO_NOTHING,null=True)
-    post = models.CharField(max_length=30,null=True)
-    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
-    phd_Req = models.BooleanField(default=False,null=True)
-    # spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
-    createdby = models.CharField(max_length=30,null=True)
+    dept = models.ForeignKey(department,on_delete=models.DO_NOTHING)
+    post = models.CharField(max_length=30)
+    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,default=0)
+    phd_Req = models.BooleanField(default=False)
+    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    createdby = models.CharField(max_length=30)
     
     
 class application(models.Model):
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT,null=True)
-    job = models.ForeignKey(job,on_delete=models.PROTECT,null=True)
+    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    job = models.ForeignKey(job,on_delete=models.PROTECT)
     dob = models.DateField()
     age = models.PositiveBigIntegerField()
     GENDER_CHOICES = (
         ('M', 'Male'),
-        ('F', 'Female'),
-        ('N', 'Rather Not Say')
+        ('F', 'Female')
     )
-    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
     Title_ch = (
         ('1','Mrs.'),
         ('2','Mr.'),
         ('3','Dr.'),
         ('4','Ms.'),
     )
-    title = models.CharField(max_length=5,choices=Title_ch,null=True)
+    title = models.CharField(max_length=5,choices=Title_ch)
     father = models.CharField(max_length=40,null=True)
     mother = models.CharField(max_length=40,null=True)
     CAT_CHOICES = (
@@ -59,8 +59,8 @@ class application(models.Model):
         ('3','ST'),
         ('4','OBC'),
     )
-    category = models.CharField(max_length=5,choices=CAT_CHOICES,null=True)
-    Nationality = models.CharField(max_length=30,null=True)
+    category = models.CharField(max_length=5,choices=CAT_CHOICES)
+    Nationality = models.CharField(max_length=30)
     
     qual = (
         ('1','B.A.'),
@@ -71,19 +71,19 @@ class application(models.Model):
         ('6','M.Tech'),
         ('7','PhD'),
     )
-    qualifications = models.CharField(max_length=30,choices=qual,null=True)
-    cgpa = models.DecimalField(max_digits=2,decimal_places=1)
-    experiance = models.PositiveBigIntegerField()
-    citations = models.PositiveBigIntegerField()
-    publications = models.PositiveBigIntegerField()
-    country = models.CharField(max_length=40,null=True)
-    city = models.CharField(max_length=40,null=True)
-    state = models.CharField(max_length=40,null=True)
-    district = models.CharField(max_length=40,null=True)
-    postal = models.CharField(max_length=50,null=True)
-    pincode = models.CharField(max_length=6,null=True)
-    mob_num = models.CharField(max_length=10,null=True)
+    qualifications = models.CharField(max_length=30,choices=qual)
+    cgpa = models.DecimalField(max_digits=2,decimal_places=1,default=5)
+    experiance = models.PositiveBigIntegerField(default=0)
+    citations = models.PositiveBigIntegerField(default=0)
+    publications = models.PositiveBigIntegerField(default=0)
+    country = models.CharField(max_length=40)
+    city = models.CharField(max_length=40)
+    state = models.CharField(max_length=40)
+    district = models.CharField(max_length=40)
+    postal = models.CharField(max_length=200)
+    pincode = models.CharField(max_length=6)
+    mob_num = models.CharField(max_length=10)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
-    user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
+    user= models.ForeignKey(User,on_delete=models.DO_NOTHING)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
