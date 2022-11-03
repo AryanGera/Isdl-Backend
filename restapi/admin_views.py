@@ -10,19 +10,19 @@ from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
 
 @api_view(['POST'])
 def create_job(request):
-    code = request.query_params.get('code',None)
+    dept_id = request.data.get("dept")
     user=None
-    if code =="cse":
+    if dept_id == '1':
         print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == '2':
         user = authEce(request)
-    if code =="cce":
+    if dept_id == '3':
         user = authCce(request)
-    if code =="mec":
+    if dept_id == '4':
         user = authMMe(request)
     if user:
-        dept = department.objects.filter(code=code).first()
+        dept = department.objects.filter(id=dept_id).first()
         js = JobSerializer(data=request.data)
         print(dept.id)
         if js.is_valid():
@@ -40,17 +40,19 @@ def create_job(request):
 
 @api_view(['POST'])
 def delete_job(request):
-    code = request.query_params.get('code',None)
-    if code =="cse":
+    dept_id = request.data.get("dept")
+    user=None
+    if dept_id == '1':
+        print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == '2':
         user = authEce(request)
-    if code =="cce":
+    if dept_id == '3':
         user = authCce(request)
-    if code =="mec":
+    if dept_id == '4':
         user = authMMe(request)
     if user:
-        jb = job.objects.get(id=request.data.get("job_id")).first()
+        jb = job.objects.get(id=request.data.get("id"))
         jb.delete()
         return Response({"job":"deleted"})
         
@@ -60,14 +62,16 @@ def delete_job(request):
 
 @api_view(['POST'])
 def nextRnd(request):
-    code = request.query_params.get('code',None)
-    if code =="cse":
+    dept_id = request.data.get("dept")
+    user=None
+    if dept_id == '1':
+        print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == '2':
         user = authEce(request)
-    if code =="cce":
+    if dept_id == '3':
         user = authCce(request)
-    if code =="mec":
+    if dept_id == '4':
         user = authMMe(request)
     if user:
         app=application.objects.filter(id=request.data.get("id")).first()
@@ -79,14 +83,16 @@ def nextRnd(request):
 
 @api_view(['POST'])
 def schedule(request):
-    code = request.query_params.get('code',None)
-    if code =="cse":
+    dept_id = request.data.get("dept")
+    user=None
+    if dept_id == '1':
+        print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == '2':
         user = authEce(request)
-    if code =="cce":
+    if dept_id == '3':
         user = authCce(request)
-    if code =="mec":
+    if dept_id == '4':
         user = authMMe(request)
     if user:
         app=application.objects.filter(id=request.data.get("id")).first()
@@ -122,7 +128,7 @@ def Fetch_Jobs(request):
 @api_view(['GET'])
 def Fetch_applications(request):
     user = None
-    jb = job.objects.filter(id=request.data.get("job_id")).first()
+    jb = job.objects.filter(id=request.data.get("id")).first()
     code = jb.dept.code
     if code =="cse":
         user = authCse(request)

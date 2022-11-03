@@ -35,7 +35,7 @@ class job(models.Model):
     
     
 class application(models.Model):
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    spez= models.ForeignKey(spez,on_delete=models.PROTECT)
     job = models.ForeignKey(job,on_delete=models.PROTECT)
     dob = models.DateField()
     age = models.PositiveBigIntegerField()
