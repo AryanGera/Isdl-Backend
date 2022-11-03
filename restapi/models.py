@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser
 class spez(models.Model):
     name = models.CharField(max_length=50)
 
-class dept(models.Model):
+class department(models.Model):
     name = models.CharField(max_length=50)
     code = models.CharField(max_length=3)
 
@@ -21,10 +21,11 @@ class User(AbstractUser):
     mec_Acess = models.BooleanField(default=False)
     cce_Acess = models.BooleanField(default=False)
     ece_Acess = models.BooleanField(default=False)
+    username=None
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
 class job(models.Model):
-    dept = models.ForeignKey(dept,on_delete=models.DO_NOTHING,null=True)
+    dept = models.ForeignKey(department,on_delete=models.DO_NOTHING,null=True)
     post = models.CharField(max_length=30,null=True)
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
     # phd_Req = models.BooleanField(default=False,null=True)

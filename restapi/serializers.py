@@ -26,7 +26,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model=job
-        fields=['dept_name','post']
+        fields=['dept','post','cgpa_Req']
 
 class application_Serializer(serializers.ModelSerializer):
     class Meta:

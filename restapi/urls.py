@@ -1,10 +1,13 @@
 from django.urls import path,re_path
 
 from .views import register,login,authuser,authCce,authCse,authEce,authMMe,grant_Perms
+from .admin_views import create_job
+
 
 urlpatterns = [
+    path('cj',create_job),
     path('rg',register),
     path('lg',login),
-    path('au',authuser),
+    path('au',authCse),
     path('gp',grant_Perms)
 ]

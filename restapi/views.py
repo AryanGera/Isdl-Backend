@@ -12,7 +12,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from .models import User,application,job
 from .serializers import UserLoginSerializer,JobSerializer,application_Serializer,UserSerializer
 
-
+@api_view(['POST'])
 def register(request):
     serializer=UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -63,6 +63,7 @@ def Decode(token):
     except:
         return None
 
+
 def authuser(request): #returns user 
     payload=Decode(request.query_params.get('jwt',"lol"))
     if payload==None:
@@ -71,26 +72,23 @@ def authuser(request): #returns user
     if user:
         return Response(UserSerializer(user).data)
     else:
+
         return None
 
 def authCse(request):
+    print("incse")
+    print(request.query_params.get('jwt',None))
     payload=Decode(request.query_params.get('jwt',"lol"))
     if payload==None:
+        print("couldnt decode")
         return None #cannot auth user
     user=User.objects.get(pk=payload['id'])
     if user and user.cse_Acess:
         return Response(UserSerializer(user).data)
     else:
+        print("No user")
         return None
-def authCse(request):
-    payload=Decode(request.query_params.get('jwt',"lol"))
-    if payload==None:
-        return None #cannot auth user
-    user=User.objects.get(pk=payload['id'])
-    if user and user.cse_Acess:
-        return user
-    else:
-        return None
+
 
 def authCce(request):
     payload=Decode(request.query_params.get('jwt',"lol"))
