@@ -70,10 +70,10 @@ def nextRnd(request):
     if code =="mec":
         user = authMMe(request)
     if user:
-        jb=job.objects.filter(id=request.data.get("id")).first()
-        jb.roundNum+=1
-        jb.save()
-        return Response({"Round updated to":jb.roundNum})
+        app=application.objects.filter(id=request.data.get("id")).first()
+        app.roundNum+=1
+        app.save()
+        return Response({"Round updated to":app.roundNum})
     else:
         return Response({"auth error":"bad auth"})
 
@@ -89,8 +89,69 @@ def schedule(request):
     if code =="mec":
         user = authMMe(request)
     if user:
-        jb=job.objects.filter(id=request.data.get("id")).first()
-        jb.schedule = request.data.get("datetime")
-        jb.save()
+        app=application.objects.filter(id=request.data.get("id")).first()
+        app.schedule = request.data.get("datetime")
+        app.save()
+    else:
+        return Response({"auth error":"bad auth"})
+
+@api_view(['GET'])
+def Fetch_Jobs(request):
+    jobs = []
+    user = authCse(request)
+    if user:
+        jobs+=list(job.objects.filter(dept=department.objects.filter(code="cse").first()))
+    user=None
+    user = authEce(request)
+    if user:
+        jobs+=list(job.objects.filter(dept=department.objects.filter(code="ece").first()))
+    user=None
+    user = authCce(request)   
+    if user:
+        jobs+=list(job.objects.filter(dept=department.objects.filter(code="cce").first()))
+    user=None
+    user = authMMe(request)
+    if user:
+        jobs+=list(job.objects.filter(dept=department.objects.filter(code="mec").first()))
+    user=None
+    if len(jobs):
+        return Response(JobSerializer(jobs,many=True).data)
+    else:
+        return Response({"auth error":"bad_auth"})
+
+@api_view(['GET'])
+def Fetch_applications(request):
+    user = None
+    jb = job.objects.filter(id=request.data.get("job_id")).first()
+    code = jb.dept.code
+    if code =="cse":
+        user = authCse(request)
+    if code =="ece":
+        user = authEce(request)
+    if code =="cce":
+        user = authCce(request)
+    if code =="mec":
+        user = authMMe(request)
+    if user:
+        cand = application.objects.filter(job=jb)
+        return Response(application_Serializer(cand,many=True).data)
+    else:
+        return Response({"auth error":"bad auth"})
+
+@api_view(['GET'])
+def Reject(request):
+    code = request.query_params.get('code',None)
+    if code =="cse":
+        user = authCse(request)
+    if code =="ece":
+        user = authEce(request)
+    if code =="cce":
+        user = authCce(request)
+    if code =="mec":
+        user = authMMe(request)
+    if user:
+        app=application.objects.filter(id=request.data.get("id")).first()
+        app.delete()
+        return Response({"Succesful Action":"Application Deleted"})
     else:
         return Response({"auth error":"bad auth"})

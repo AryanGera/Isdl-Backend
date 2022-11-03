@@ -89,6 +89,19 @@ def authCse(request):
         print("No user")
         return None
 
+def authAdmin(request):
+    print("incse")
+    print(request.query_params.get('jwt',None))
+    payload=Decode(request.query_params.get('jwt',"lol"))
+    if payload==None:
+        print("couldnt decode")
+        return None #cannot auth user
+    user=User.objects.get(pk=payload['id'])
+    if user and (user.cse_Acess|user.ece_Acess|user.mec_Acess|user.cce_Acess):
+        return Response(UserSerializer(user).data)
+    else:
+        print("No user")
+        return None
 
 def authCce(request):
     payload=Decode(request.query_params.get('jwt',"lol"))

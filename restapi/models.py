@@ -31,8 +31,7 @@ class job(models.Model):
     phd_Req = models.BooleanField(default=False,null=True)
     # spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
     createdby = models.CharField(max_length=30,null=True)
-    roundNum = models.PositiveSmallIntegerField(default=1)
-    schedule = models.DateTimeField(null=True)
+    
     
 class application(models.Model):
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT,null=True)
@@ -87,3 +86,4 @@ class application(models.Model):
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
     user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
     schedule = models.DateTimeField(null=True)
+    roundNum = models.PositiveSmallIntegerField(default=1)
