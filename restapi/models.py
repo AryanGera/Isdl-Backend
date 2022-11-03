@@ -8,7 +8,11 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class spez(models.Model):
     name = models.CharField(max_length=50)
-    
+
+class dept(models.Model):
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=3)
+
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
@@ -20,7 +24,7 @@ class User(AbstractUser):
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
 class job(models.Model):
-    dept_name = models.CharField(max_length=45,null=True)
+    dept = models.ForeignKey(dept,on_delete=models.DO_NOTHING,null=True)
     post = models.CharField(max_length=30,null=True)
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
     # phd_Req = models.BooleanField(default=False,null=True)
