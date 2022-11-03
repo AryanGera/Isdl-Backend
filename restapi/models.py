@@ -28,9 +28,11 @@ class job(models.Model):
     dept = models.ForeignKey(department,on_delete=models.DO_NOTHING,null=True)
     post = models.CharField(max_length=30,null=True)
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,null=True)
-    # phd_Req = models.BooleanField(default=False,null=True)
+    phd_Req = models.BooleanField(default=False,null=True)
     # spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
     createdby = models.CharField(max_length=30,null=True)
+    roundNum = models.PositiveSmallIntegerField(default=1)
+    schedule = models.DateTimeField(null=True)
     
 class application(models.Model):
     spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT,null=True)
