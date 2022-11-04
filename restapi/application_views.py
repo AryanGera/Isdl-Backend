@@ -10,18 +10,37 @@ def register_Application(request):
     registerM(request)
     email = request.data.get("email")
     user = User.objects.filter(email=email).first()
-    # szName = request.data.get("sz") 
-    # spez = spez.objects.filter(name=szName)
-    if ass.is_valid():
+    jb = job.objects.get(id=request.data.get("job"))
+    
+    req_spez = jb.spez_Req
+    inSpez = spez.objects.get(id=request.data.get("spez"))
+    print(inSpez)
+    valid = True
+    if jb.phd_Req and int(request.data.get("qualifications"))!=7:
+        print("yep1")
+        valid =False
+    if float(jb.cgpa_Req)>float(request.data.get("cgpa")):
+        print("yep2")
+        valid=False
+    if req_spez !=inSpez:
+        print("1")
+        valid=False
+    if ass.is_valid() and valid:
         obj = ass.save()
     else:
+        user.delete()
         return Response({"bad":"response"})
-    obj.user = user
+    if user:
+        obj.user = user
+
+    else:
+        return Response({"user":"not found"})
     # obj.spez_Req=spez
-    jb = job.objects.filter(id=request.data.get("job_id")).first()
+    jb = job.objects.filter(id=request.data.get("job")).first()
     obj.job = jb
     hs = hireability_score(request)
     obj.hireScore = hs
+    obj.save()
     return Response({"user":"registered"})
 
 def hireability_score(request):
@@ -40,8 +59,9 @@ def hireability_score(request):
 @api_view(['GET'])
 def get_details(request):
     user = authuser(request)
+
     if user:
-        app = application.objects.filter(user=user)
+        app = application.objects.filter(user=user.data.get("id")).first()
         return Response(application_Serializer(app).data)
     else:
         return Response({"bad":"auth"})
@@ -85,4 +105,6 @@ def delete_app(request):
         Response({"bad":"auth"})
 
 
-
+    
+    
+    

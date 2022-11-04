@@ -37,7 +37,7 @@ class job(models.Model):
 class application(models.Model):
     spez= models.ForeignKey(spez,on_delete=models.PROTECT)
     job = models.ForeignKey(job,on_delete=models.PROTECT)
-    dob = models.DateField()
+    dob = models.DateField(null=True)
     age = models.PositiveBigIntegerField()
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -84,6 +84,7 @@ class application(models.Model):
     pincode = models.CharField(max_length=6)
     mob_num = models.CharField(max_length=10)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
-    user= models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
+
