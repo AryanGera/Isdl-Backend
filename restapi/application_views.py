@@ -7,11 +7,16 @@ from .views import register,authuser,registerM
 @api_view(['POST'])
 def register_Application(request):
     ass = application_Serializer(data=request.data)
-    registerM(request)
-    email = request.data.get("email")
-    user = User.objects.filter(email=email).first()
+    resp = authuser(request)
+    user=User.objects.get(id=resp.data.get("id"))
+    if user==None:
+        registerM(request)
+        email = request.data.get("email")
+        user = User.objects.filter(email=email).first()
     jb = job.objects.get(id=request.data.get("job"))
-    
+    ap = application.objects.filter(job=jb.id,user=user.id)
+    if ap:
+        return Response({"bad input":"cannot fill application for same job twice"})
     req_spez = jb.spez_Req
     inSpez = spez.objects.get(id=request.data.get("spez"))
     print(inSpez)
@@ -25,10 +30,9 @@ def register_Application(request):
     if req_spez !=inSpez:
         print("1")
         valid=False
-    if ass.is_valid() and valid:
+    if ass.is_valid() and valid :
         obj = ass.save()
     else:
-        user.delete()
         return Response({"bad":"response"})
     if user:
         obj.user = user
@@ -59,50 +63,44 @@ def hireability_score(request):
 @api_view(['GET'])
 def get_details(request):
     user = authuser(request)
-
     if user:
-        app = application.objects.filter(user=user.data.get("id")).first()
-        return Response(application_Serializer(app).data)
+        app = application.objects.filter(user=user.data.get("id"))
+        return Response(application_Serializer(app).data,many=True)
     else:
         return Response({"bad":"auth"})
 
+#randap kiya hai if fucky fucky check citations=dt.get("citations")if (dt.get("citations")) else app.citations,
 @api_view(['POST'])
 def update_Application(request):
     user=authuser(request)
-    if user:
-        ass = application_Serializer(data=request.data)
-        # obj = application.objects.filter(id=ass.id)
-        # obj.postal=ass.data.get('postal')
-        # obj.city=ass.data.get('city')
-        # obj.pincode=ass.data.get('pincode')
-        # obj.mob_num=ass.data.get('mob_num')
-        # obj.state=ass.data.get('state')
-        if ass.is_valid():
-            obj = ass.save()
-        else:
-            return Response({"bad":"response"})
+    ap = application.objects.filter(user=user.data.get("id"))
+    app = ap.first()
+    if user and ap:
+        dt = request.data
+        ap.update(
+            experiance=dt.get("experiance")if (dt.get("experiance")) else app.experiance,
+            citations=dt.get("citations")if (dt.get("citations")) else app.citations,
+            publications = dt.get("publications")if (dt.get("publications")) else app.publications,
+            country =dt.get("country")if (dt.get("country")) else app.country, 
+            city = dt.get("city")if (dt.get("city")) else app.city,
+            state = dt.get("state")if (dt.get("state")) else app.state,
+            district = dt.get("district")if (dt.get("district")) else app.district,
+            postal =dt.get("postal")if (dt.get("postal")) else app.postal,
+            pincode = dt.get("pincode")if (dt.get("pincode")) else app.pincode,
+            mob_num =dt.get("mob_num")if (dt.get("mob_num")) else app.mob_num,
+        )
+        return Response({"done":"done"})
     else:
         return Response({"bad":"auth"})
-    # user.application = obj
-    # obj.spez_Req=spez
-    # jb = job.objects.filter(id=request.data.get("job_id"))
-    # obj.job = jb
-    # hs = hireability_score(request)
-    # obj.hireScore = hs
-    # return Response({"user":"registered"})
-# @api_view(['POST'])
-# def get_application(request):
-    
-# @api_view(['POST'])
-# def update_Application(request):
+
 @api_view(['POST'])
 def delete_app(request):
     user = authuser(request)
     if(user):
-        application.objects.filter(user=user).delete()
-        Response({"deleted":"yep"})
+        application.objects.filter(user=user.data.get("id")).delete()
+        return Response({"deleted":"yep"})
     else:
-        Response({"bad":"auth"})
+        return Response({"bad":"auth"})
 
 
     

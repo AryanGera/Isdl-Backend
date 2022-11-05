@@ -12,7 +12,7 @@ class department(models.Model):
 
 class spez(models.Model):
     name = models.CharField(max_length=100)
-    dept=models.ForeignKey(department,on_delete=models.DO_NOTHING)
+    dept=models.ForeignKey(department,on_delete=models.CASCADE)
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
@@ -26,17 +26,17 @@ class User(AbstractUser):
     USERNAME_FIELD ="email"
     REQUIRED_FIELDS = []
 class job(models.Model):
-    dept = models.ForeignKey(department,on_delete=models.DO_NOTHING)
+    dept = models.ForeignKey(department,on_delete=models.CASCADE)
     post = models.CharField(max_length=30)
     cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,default=0)
     phd_Req = models.BooleanField(default=False)
-    spez_Req= models.ForeignKey(spez,on_delete=models.PROTECT)
+    spez_Req= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
     createdby = models.CharField(max_length=30)
     
     
 class application(models.Model):
-    spez= models.ForeignKey(spez,on_delete=models.PROTECT)
-    job = models.ForeignKey(job,on_delete=models.PROTECT)
+    spez= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
+    job = models.ForeignKey(job,on_delete=models.CASCADE)
     dob = models.DateField(null=True)
     age = models.PositiveBigIntegerField()
     GENDER_CHOICES = (
@@ -84,7 +84,7 @@ class application(models.Model):
     pincode = models.CharField(max_length=6)
     mob_num = models.CharField(max_length=10)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
-    user= models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True)
+    user= models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
 

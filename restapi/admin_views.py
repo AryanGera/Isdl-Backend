@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,dept_Serializer,spez_Serializer
 from .models import job,User,application,spez,department
 from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
-
+from django.db.models.query import QuerySet
 
 
 
@@ -12,14 +12,14 @@ from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
 def create_job(request):
     dept_id = request.data.get("dept")
     user=None
-    if dept_id == '1':
+    if dept_id == '2':
         print("auth tried")
         user = authCse(request)
-    if dept_id == '2':
-        user = authEce(request)
     if dept_id == '3':
-        user = authCce(request)
+        user = authEce(request)
     if dept_id == '4':
+        user = authCce(request)
+    if dept_id == '1':
         user = authMMe(request)
     if user:
         dept = department.objects.filter(id=dept_id).first()
@@ -40,19 +40,20 @@ def create_job(request):
 
 @api_view(['POST'])
 def delete_job(request):
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=request.data.get("id"))
+    print(jb.dept)
+    dept_id = jb.dept.id
     user=None
-    if dept_id == '1':
+    if dept_id == 2:
         print("auth tried")
         user = authCse(request)
-    if dept_id == '2':
+    if dept_id == 3:
         user = authEce(request)
-    if dept_id == '3':
+    if dept_id == 4:
         user = authCce(request)
-    if dept_id == '4':
+    if dept_id == 1:
         user = authMMe(request)
     if user:
-        jb = job.objects.get(id=request.data.get("id"))
         jb.delete()
         return Response({"job":"deleted"})
         
@@ -62,19 +63,19 @@ def delete_job(request):
 
 @api_view(['POST'])
 def nextRnd(request):
-    dept_id = request.data.get("dept")
+    app=application.objects.filter(id=request.data.get("id")).first()
+    dept_id = app.job.dept.id
     user=None
-    if dept_id == '1':
+    if dept_id == 2:
         print("auth tried")
         user = authCse(request)
-    if dept_id == '2':
+    if dept_id == 3:
         user = authEce(request)
-    if dept_id == '3':
+    if dept_id == 4:
         user = authCce(request)
-    if dept_id == '4':
+    if dept_id == 1:
         user = authMMe(request)
     if user:
-        app=application.objects.filter(id=request.data.get("id")).first()
         app.roundNum+=1
         app.save()
         return Response({"Round updated to":app.roundNum})
@@ -83,42 +84,44 @@ def nextRnd(request):
 
 @api_view(['POST'])
 def schedule(request):
-    dept_id = request.data.get("dept")
+    app=application.objects.filter(id=request.data.get("id")).first()
+    dept_id = app.job.dept.id
     user=None
-    if dept_id == '1':
+    if dept_id == 2:
         print("auth tried")
         user = authCse(request)
-    if dept_id == '2':
+    if dept_id == 3:
         user = authEce(request)
-    if dept_id == '3':
+    if dept_id == 4:
         user = authCce(request)
-    if dept_id == '4':
+    if dept_id == 1:
         user = authMMe(request)
     if user:
-        app=application.objects.filter(id=request.data.get("id")).first()
+
         app.schedule = request.data.get("datetime")
         app.save()
+        return Response({"Schedule Updated":request.data.get("datetime")})
     else:
         return Response({"auth error":"bad auth"})
 
 @api_view(['GET'])
 def Fetch_Jobs(request):
-    jobs = []
+    jobs = QuerySet(job)
     user = authCse(request)
     if user:
-        jobs+=list(job.objects.filter(dept=department.objects.filter(code="cse").first()))
+        jobs|=job.objects.filter(dept=department.objects.filter(code="cse").first())
     user=None
     user = authEce(request)
     if user:
-        jobs+=list(job.objects.filter(dept=department.objects.filter(code="ece").first()))
+        jobs|=job.objects.filter(dept=department.objects.filter(code="ece").first())
     user=None
     user = authCce(request)   
     if user:
-        jobs+=list(job.objects.filter(dept=department.objects.filter(code="cce").first()))
+        jobs|=job.objects.filter(dept=department.objects.filter(code="cce").first())
     user=None
     user = authMMe(request)
     if user:
-        jobs+=list(job.objects.filter(dept=department.objects.filter(code="mec").first()))
+        jobs|=job.objects.filter(dept=department.objects.filter(code="mec").first())
     user=None
     if len(jobs):
         return Response(JobSerializer(jobs,many=True).data)
@@ -129,14 +132,15 @@ def Fetch_Jobs(request):
 def Fetch_applications(request):
     user = None
     jb = job.objects.filter(id=request.data.get("id")).first()
-    code = jb.dept.code
-    if code =="cse":
+    dept_id=jb.dept.id
+    if dept_id == 2:
+        print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == 3:
         user = authEce(request)
-    if code =="cce":
+    if dept_id == 4:
         user = authCce(request)
-    if code =="mec":
+    if dept_id == 1:
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
@@ -146,17 +150,18 @@ def Fetch_applications(request):
 
 @api_view(['GET'])
 def Reject(request):
-    code = request.query_params.get('code',None)
-    if code =="cse":
+    app=application.objects.filter(id=request.data.get("id")).first()
+    dept_id = app.job.dept.id
+    if dept_id == 2:
+        print("auth tried")
         user = authCse(request)
-    if code =="ece":
+    if dept_id == 3:
         user = authEce(request)
-    if code =="cce":
+    if dept_id == 4:
         user = authCce(request)
-    if code =="mec":
+    if dept_id == 1:
         user = authMMe(request)
     if user:
-        app=application.objects.filter(id=request.data.get("id")).first()
         app.delete()
         return Response({"Succesful Action":"Application Deleted"})
     else:
