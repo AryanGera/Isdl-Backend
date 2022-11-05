@@ -6,26 +6,25 @@ from .application_views import register_Application,get_details,update_Applicati
 from .dev_views import all_Jobs
 
 urlpatterns = [
-    path('cj',create_job),
-    path('ua',update_Application),
+    path('createJob',create_job),
+    path('updateApp',update_Application),
     path('aj',all_Jobs),
-    path('dj',delete_job),
-    path('ra',register_Application),
-    path('fj',Fetch_Jobs),
-    path('sc',schedule),
-    path('nr',nextRnd),
+    path('deleteJob',delete_job),
+    path('registerApp',register_Application),
+    path('fetchJobs',Fetch_Jobs),
+    path('schedule',schedule),
+    path('nextRound',nextRnd),
     path('rg',register),
-    path('lg',login),
-    path('au',authCse),
+    path('login',login),
     path('gp',grant_Perms),
-    path('ad',add_dept),
-    path('as',add_spez),
-    path('fa',Fetch_applications),
-    path('rj',Reject),
-    path('da',delete_app),
+    path('addDept',add_dept),
+    path('addSpez',add_spez),
+    path('fetchApp',Fetch_applications),
+    path('rejectApp',Reject),
+    path('deleteApp',delete_app),
 
 
 
-    path('gd',get_details)
+    path('getDetails',get_details)
 
 ]
