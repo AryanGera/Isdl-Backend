@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn isdlbc.wsgi --log-file -
+web: gunicorn Isdl-Backend.wsgi --log-file -
