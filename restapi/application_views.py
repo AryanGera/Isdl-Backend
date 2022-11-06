@@ -8,12 +8,12 @@ from .views import register,authuser,registerM
 def register_Application(request):
     ass = application_Serializer(data=request.data)
     email = request.data.get("email")
-    user = User.objects.filter(email=email)
+    user = User.objects.filter(email=email).first()
     if user==None:
         registerM(request)
         user = User.objects.filter(email=email).first()
-    jb = job.objects.get(id=request.data.get("job"))
-    ap = application.objects.filter(job=jb.id,user=user.id)
+    jb = job.objects.get(id=request.data.get("job")).first()
+    ap = application.objects.filter(job=jb.id,user=user.id).first()
     if ap:
         return Response({"bad input":"cannot fill application for same job twice"})
     ass.user=user
