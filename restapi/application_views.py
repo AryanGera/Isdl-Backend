@@ -7,17 +7,16 @@ from .views import register,authuser,registerM
 @api_view(['POST'])
 def register_Application(request):
     ass = application_Serializer(data=request.data)
-    resp = authuser(request)
-    if resp:
-        user = User.objects.filter(id=resp.data.get("id")).first()
-    else:
+    email = request.data.get("email")
+    user = User.objects.filter(email=email)
+    if user==None:
         registerM(request)
-        email = request.data.get("email")
         user = User.objects.filter(email=email).first()
-        jb = job.objects.get(id=request.data.get("job"))
-        ap = application.objects.filter(job=jb.id,user=user.id)
+    jb = job.objects.get(id=request.data.get("job"))
+    ap = application.objects.filter(job=jb.id,user=user.id)
     if ap:
         return Response({"bad input":"cannot fill application for same job twice"})
+    ass.user=user
     req_spez = jb.spez_Req
     inSpez = spez.objects.get(id=request.data.get("spez"))
     print(inSpez)
