@@ -69,7 +69,7 @@ def get_details(request):
     else:
         return Response({"bad":"auth"})
 
-#randap kiya hai if fucky fucky check citations=dt.get("citations")if (dt.get("citations")) else app.citations,
+#if anything breaks check this first
 @api_view(['POST'])
 def update_Application(request):
     user=authuser(request)
