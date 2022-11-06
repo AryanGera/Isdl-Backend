@@ -1,6 +1,6 @@
 from django.urls import path,re_path
 
-from .views import register,login,authuser,authCce,authCse,authEce,authMMe,grant_Perms
+from .views import register,login,authuser,authCce,authCse,authEce,authMMe,grant_Perms,logout
 from .admin_views import create_job,nextRnd,schedule,Fetch_Jobs,add_dept,add_spez,delete_job,Fetch_applications,Reject
 from .application_views import register_Application,get_details,update_Application,delete_app
 from .dev_views import all_Jobs
@@ -16,6 +16,7 @@ urlpatterns = [
     path('nextRound',nextRnd),
     path('rg',register),
     path('login',login),
+    path('logout',logout),
     path('gp',grant_Perms),
     path('addDept',add_dept),
     path('addSpez',add_spez),

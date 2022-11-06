@@ -166,3 +166,10 @@ def authMMe(request):
         return user
     else:
         return None
+
+@api_view(['POST'])
+def logout(request):
+    response=Response()
+    response.delete_cookie('jwt')
+    response.data={"message":"success"}
+    return response
