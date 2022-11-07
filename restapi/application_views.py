@@ -65,7 +65,8 @@ def get_details(request):
     user = authuser(request)
     if user:
         app = application.objects.filter(user=user.data.get("id"))
-        return Response(application_Serializer(app,many=True).data)
+        jb=job.objects.all()
+        return Response(application_Serializer(app,many=True).data,{"name":user.name})
     else:
         return Response({"bad":"auth"})
 
