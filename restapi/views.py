@@ -33,8 +33,8 @@ def login(request):
     email = request.data['email']
     password = request.data['password']
     user = User.objects.filter(email=email).first()
-    isAdmin = False
-    if (user.cse_Acess | user.cce_Acess | user.ece_Acess | user.mec_Acess):
+    isDofa =False
+    if (user.cse_Acess and user.cce_Acess and user.ece_Acess and user.mec_Acess):
         isAdmin = True
     if user == None:
         raise AuthenticationFailed('User not found')
@@ -46,7 +46,11 @@ def login(request):
         'email': user.email,
         'exp': datetime.utcnow()+timedelta(minutes=30),
         'iat': datetime.utcnow(),
-        'isAdmin': isAdmin
+        'isDofa': isDofa,
+        'isCse':user.cse_Acess,
+        'isEse':user.ece_Acess,
+        'isCce':user.cce_Acess,
+        'isMec':user.mec_Acess
     }
 
     token = jwt.encode(payload=payload, key='secret', algorithm='HS256')
