@@ -35,7 +35,7 @@ def login(request):
     user = User.objects.filter(email=email).first()
     isDofa =False
     if (user.cse_Acess and user.cce_Acess and user.ece_Acess and user.mec_Acess):
-        isAdmin = True
+        isDofa = True
     if user == None:
         raise AuthenticationFailed('User not found')
     if user.check_password(password) == False:
