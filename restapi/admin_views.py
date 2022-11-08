@@ -131,7 +131,8 @@ def Fetch_Jobs(request):
 @api_view(['GET'])
 def Fetch_applications(request):
     user = None
-    jb = job.objects.filter(id=request.data.get("id")).first()
+    id=request.query_params.get("id")
+    jb = job.objects.filter(id=id).first()
     dept_id=jb.dept.id
     if dept_id == 2:
         print("auth tried")
