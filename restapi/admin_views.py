@@ -59,6 +59,7 @@ def delete_job(request):
         
     else:
         return Response({"bad":"auth"})
+# made by - Aryan Gera 20UCS032
 
 
 @api_view(['POST'])
@@ -103,6 +104,7 @@ def schedule(request):
         return Response({"Schedule Updated":request.data.get("datetime")})
     else:
         return Response({"auth error":"bad auth"})
+# made by - Aryan Gera 20UCS032
 
 @api_view(['GET'])
 def Fetch_Jobs(request):
@@ -127,6 +129,7 @@ def Fetch_Jobs(request):
         return Response(JobSerializer(jobs,many=True).data)
     else:
         return Response({"auth error":"bad_auth"})
+# made by - Aryan Gera 20UCS032
 
 @api_view(['GET'])
 def Fetch_applications(request):

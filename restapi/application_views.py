@@ -36,6 +36,7 @@ def register_Application(request):
         return Response({"bad":"response"})
     if user:
         obj.user = user
+# made by - Aryan Gera 20UCS032
 
     else:
         return Response({"user":"not found"})
@@ -69,6 +70,7 @@ def get_details(request):
         return Response(application_Serializer(app,many=True).data)
     else:
         return Response({"bad":"auth"})
+# made by - Aryan Gera 20UCS032
 
 #if anything breaks check this first
 @api_view(['POST'])
