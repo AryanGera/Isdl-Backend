@@ -37,7 +37,6 @@ def register_Application(request):
     if user:
         obj.user = user
 # made by - Aryan Gera 20UCS032
-
     else:
         return Response({"user":"not found"})
     # obj.spez_Req=spez

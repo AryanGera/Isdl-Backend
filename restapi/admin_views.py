@@ -24,19 +24,16 @@ def create_job(request):
     if user:
         dept = department.objects.filter(id=dept_id).first()
         js = JobSerializer(data=request.data)
+        jb.dept = dept
         print(dept.id)
         if js.is_valid():
             jb=js.save()
         else:
-            return Response({"bad":"input"})
-        jb.dept = dept
-        if js.is_valid():
-            jb=js.save()
-        else:
-            return Response({"bad":"department"})
+            return Response(js.errors,400)
+        
         return Response(jb.dept.name)
     else:
-        return Response({"bad":"auth"})
+        return Response({"bad":"auth"},401)
 
 @api_view(['POST'])
 def delete_job(request):
@@ -179,7 +176,11 @@ def add_dept(request):
         ds.save()
         return Response(ds.data)
     else:
-        return Response({"bad":"input"})
+        if user:
+            return Response(ds.errors,400)
+        else:
+            return Response({"dofa":"auth error no dofa found"},401)
+
 
 @api_view(['POST'])
 def add_spez(request):
@@ -189,5 +190,8 @@ def add_spez(request):
         ss.save()
         return Response(ss.data)
     else:
-        return Response({"bad":"input"})
+        if user:
+            return Response(ss.errors,400)
+        else:
+            return Response({"dofa":"auth error no dofa found"},401)
 
