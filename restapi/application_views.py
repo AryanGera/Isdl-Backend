@@ -33,7 +33,7 @@ def register_Application(request):
     if ass.is_valid() and valid :
         obj = ass.save()
     else:
-        return Response(ass.errors)
+        return Response(ass.errors,400)
     if user:
         obj.user = user
 # made by - Aryan Gera 20UCS032
