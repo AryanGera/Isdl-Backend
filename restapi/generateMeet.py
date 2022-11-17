@@ -3,7 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 i=0
 #body of the mail
-def sendMail(body,toaddr,subject="Recruitment Meeting Scheduled"):
+def sendMail(body,toaddr,subject):
     msg=MIMEText(body)
     fromaddr= "aryangera9@gmail.com" #the adress from which mail is sent # give acess to less secure apps
     # toaddr=""  # mail sent to

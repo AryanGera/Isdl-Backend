@@ -4,6 +4,7 @@ from .serializers import JobSerializer,application_Serializer,UserLoginSerialize
 from .models import job,User,application,spez,department
 from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
 from django.db.models.query import QuerySet
+from .generateMeet import sendMail
 
 
 
@@ -166,7 +167,7 @@ def Reject(request):
         app.delete()
         return Response({"Succesful Action":"Application Deleted"})
     else:
-        return Response({"auth error":"bad auth"})
+        return Response({"auth error":"bad auth"},401)
 
 @api_view(['POST'])
 def add_dept(request):
@@ -194,4 +195,27 @@ def add_spez(request):
             return Response(ss.errors,400)
         else:
             return Response({"dofa":"auth error no dofa found"},401)
+
+@api_view(['POST'])
+def send_mail(request):
+    app=application.objects.filter(id=request.data.get("id")).first()
+    dept_id = app.job.dept.id
+    if dept_id == 2:
+        print("auth tried")
+        user = authCse(request)
+    if dept_id == 3:
+        user = authEce(request)
+    if dept_id == 4:
+        user = authCce(request)
+    if dept_id == 1:
+        user = authMMe(request)
+    if user:
+        time=request.time
+        body="This mail is to imform you that your "
+        send = app.user.email
+        subject=""
+        sendMail(body,send,subject)
+        return Response({"email":"send"})
+    else:
+        return Response({"bad":"auth"},401)
 
