@@ -34,10 +34,7 @@ class job(models.Model):
     createdby = models.CharField(max_length=30)
     
     
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
+
 class application(models.Model):
     spez= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
     job = models.ForeignKey(job,on_delete=models.CASCADE)
