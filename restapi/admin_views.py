@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,dept_Serializer,spez_Serializer
-from .models import job,User,application,spez,department
-from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa
+from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,dept_Serializer,spez_Serializer,post_Serializer
+from .models import job,User,application,spez,department,post
+from .views import register,authuser,authMMe,authCce,authCse,authEce,authDofa,authAdmin
 from django.db.models.query import QuerySet
 from .generateMeet import sendMail
 
@@ -103,6 +103,26 @@ def schedule(request):
     else:
         return Response({"auth error":"bad auth"})
 # made by - Aryan Gera 20UCS032
+
+@api_view(['GET'])
+def getSchedule(request):
+    app=application.objects.filter(id=request.data.get("id")).first()
+    dept_id = app.job.dept.id
+    
+    user=None
+    if dept_id == 2:
+        print("auth tried")
+        user = authCse(request)
+    if dept_id == 3:
+        user = authEce(request)
+    if dept_id == 4:
+        user = authCce(request)
+    if dept_id == 1:
+        user = authMMe(request)
+    if user:
+        return Response({"schedule":app.schedule})
+    else:
+        return Response({"auth error":"bad auth"})
 
 @api_view(['GET'])
 def Fetch_Jobs(request):
@@ -218,4 +238,27 @@ def send_mail(request):
         return Response({"email":"send"})
     else:
         return Response({"bad":"auth"},401)
+
+@api_view(['POST'])
+def addPost(request):
+    user = authDofa(request)
+    if user:
+        ps = post_Serializer(data=request.data)
+        if ps.is_valid():
+            ps.save()
+            return Response(ps.data)
+        else:
+            return Response(ps.errors,400)
+    else:
+        return Response({"dofa":"auth error no dofa found"},401)
+    
+@api_view(['GET'])
+def getPosts(request):
+    user = authAdmin(request)
+    if user:
+        posts = post.objects.all()
+        return Response(post_Serializer(posts, many=True).data)
+    else:
+        return Response({"autherror":"No Admin Found"})
+
 

@@ -6,6 +6,9 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
+class post(models.Model):
+    name = models.CharField(max_length=100)
+    
 class department(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=3)
@@ -37,6 +40,7 @@ class job(models.Model):
 
 class application(models.Model):
     spez= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
+    
     job = models.ForeignKey(job,on_delete=models.CASCADE)
     dob = models.DateField(null=True)
     age = models.PositiveBigIntegerField()
@@ -73,7 +77,7 @@ class application(models.Model):
         ('7','PhD'),
     )
     qualifications = models.CharField(max_length=30,choices=qual)
-    cgpa = models.DecimalField(max_digits=2,decimal_places=1,default=5)
+    cgpa = models.DecimalField(max_digits=4,decimal_places=2)
     experiance = models.PositiveBigIntegerField(default=0)
     citations = models.PositiveBigIntegerField(default=0)
     publications = models.PositiveBigIntegerField(default=0)
@@ -86,6 +90,7 @@ class application(models.Model):
     mob_num = models.CharField(max_length=10)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
     user= models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    username = user.name
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
 

@@ -114,7 +114,19 @@ def authDofa(request):
     else:
         print("No user")
         return None
+def authAdmin(request):
 
+    print(request.query_params.get('jwt', None))
+    payload = Decode(request.query_params.get('jwt', "lol"))
+    if payload == None:
+        print("couldnt decode")
+        return None  # cannot auth user
+    user = User.objects.get(pk=payload['id'])
+    if user and (user.cse_Acess or user.ece_Acess or user.cce_Acess or user.mec_Acess):
+        return Response(UserSerializer(user).data)
+    else:
+        print("No user")
+        return None
 
 def authCse(request):
 

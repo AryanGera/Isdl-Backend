@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from restapi.models import job,department,User,application,spez
+from restapi.models import job,department,User,application,spez,post
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,4 +42,8 @@ class dept_Serializer(serializers.ModelSerializer):
 class spez_Serializer(serializers.ModelSerializer):
     class Meta:
         model = spez
+        fields='__all__'
+class post_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = post
         fields='__all__'
