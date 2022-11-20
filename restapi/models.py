@@ -90,7 +90,7 @@ class application(models.Model):
     mob_num = models.CharField(max_length=10)
     hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,null=True)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
 
