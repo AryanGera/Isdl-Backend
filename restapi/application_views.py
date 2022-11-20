@@ -69,7 +69,6 @@ def get_details(request):
         return Response(application_Serializer(app,many=True).data)
     else:
         return Response({"bad":"auth"})
-# made by - Aryan Gera 20UCS032
 
 #if anything breaks check this first
 @api_view(['POST'])
@@ -94,6 +93,7 @@ def update_Application(request):
         return Response({"done":"done"})
     else:
         return Response({"bad":"auth"})
+
 
 @api_view(['POST'])
 def delete_app(request):
