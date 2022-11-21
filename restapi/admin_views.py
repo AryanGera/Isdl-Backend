@@ -12,15 +12,17 @@ from .generateMeet import sendMail
 @api_view(['POST'])
 def create_job(request):
     dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
     user=None
-    if dept_id == '2':
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == '3':
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == '4':
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == '1':
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         dept = department.objects.filter(id=dept_id).first()
@@ -40,16 +42,18 @@ def create_job(request):
 def delete_job(request):
     jb = job.objects.get(id=request.data.get("id"))
     print(jb.dept)
-    dept_id = jb.dept.id
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
     user=None
-    if dept_id == 2:
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         jb.delete()
@@ -63,16 +67,18 @@ def delete_job(request):
 @api_view(['POST'])
 def nextRnd(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = app.job.dept.id
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
     user=None
-    if dept_id == 2:
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         app.roundNum+=1
@@ -84,16 +90,18 @@ def nextRnd(request):
 @api_view(['POST'])
 def schedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = app.job.dept.id
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
     user=None
-    if dept_id == 2:
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
 
@@ -107,17 +115,18 @@ def schedule(request):
 @api_view(['GET'])
 def getSchedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = app.job.dept.id
-    
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
     user=None
-    if dept_id == 2:
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         return Response({"schedule":app.schedule})
@@ -155,14 +164,18 @@ def Fetch_applications(request):
     id=request.query_params.get("id")
     jb = job.objects.filter(id=id).first()
     dept_id=jb.dept.id
-    if dept_id == 2:
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
+    user=None
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
@@ -173,15 +186,18 @@ def Fetch_applications(request):
 @api_view(['GET'])
 def Reject(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = app.job.dept.id
-    if dept_id == 2:
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
+    user=None
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         app.delete()
@@ -219,15 +235,18 @@ def add_spez(request):
 @api_view(['POST'])
 def send_mail(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = app.job.dept.id
-    if dept_id == 2:
+    dept_id = request.data.get("dept")
+    depart  = department.objects.get(id=dept_id)
+    code = depart.code
+    user=None
+    if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 3:
+    if dept_id == 'ece':
         user = authEce(request)
-    if dept_id == 4:
+    if dept_id == 'cce':
         user = authCce(request)
-    if dept_id == 1:
+    if dept_id == 'mme':
         user = authMMe(request)
     if user:
         time=request.time

@@ -25,10 +25,6 @@ urlpatterns = [
     path('addDept',add_dept),
     path('addSpez',add_spez),
     path('fetchApp',Fetch_applications),
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
     path('rejectApp',Reject),
     path('deleteApp',delete_app),
     path('fetchAllJobs',FetchAllJobs),

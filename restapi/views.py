@@ -18,11 +18,17 @@ def register(request):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def registerMul(request):
+    serializer = UserLoginSerializer(data=request.data,many=True)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
 # made by - Aryan Gera 20UCS032
 # made by - Aryan Gera 20UCS032
 # made by - Aryan Gera 20UCS032
     return Response(serializer.data)
-
 
 def registerM(request):
     serializer = UserLoginSerializer(data=request.data)
