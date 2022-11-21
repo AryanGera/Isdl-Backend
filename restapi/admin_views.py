@@ -42,7 +42,7 @@ def create_job(request):
 def delete_job(request):
     jb = job.objects.get(id=request.data.get("id"))
     print(jb.dept)
-    dept_id = request.data.get("dept")
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
@@ -67,7 +67,8 @@ def delete_job(request):
 @api_view(['POST'])
 def nextRnd(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=app.job)
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
@@ -90,7 +91,8 @@ def nextRnd(request):
 @api_view(['POST'])
 def schedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=app.job)
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
@@ -115,7 +117,8 @@ def schedule(request):
 @api_view(['GET'])
 def getSchedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=app.job)
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
@@ -185,7 +188,8 @@ def Fetch_applications(request):
 @api_view(['GET'])
 def Reject(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=app.job)
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
@@ -234,7 +238,8 @@ def add_spez(request):
 @api_view(['POST'])
 def send_mail(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    dept_id = request.data.get("dept")
+    jb = job.objects.get(id=app.job)
+    dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
