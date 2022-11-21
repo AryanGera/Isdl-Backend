@@ -11,12 +11,14 @@ def register_Application(request):
     user = User.objects.filter(email=email).first()
     if user==None:
         registerM(request)
-        user = User.objects.filter(email=email).first()
+    user = User.objects.filter(email=email).first()
+    ass_data = ass.data
+    ass_data['user'] = user
+    ass.data=ass_data
     jb = job.objects.get(id=request.data.get("job"))
     ap = application.objects.filter(job=jb.id,user=user.id).first()
     if ap:
         return Response({"bad input":"cannot fill application for same job twice"})
-    ass.user=user
     req_spez = jb.spez_Req
     inSpez = spez.objects.get(id=request.data.get("spez"))
     print(inSpez)
