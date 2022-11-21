@@ -166,7 +166,8 @@ def authCce(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.cce_Acess:
-        return user
+        return Response(UserSerializer(user).data)
+        
     else:
         return None
 
@@ -177,7 +178,7 @@ def authEce(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.ece_Acess:
-        return user
+        return Response(UserSerializer(user).data)
     else:
         return None
 
@@ -188,7 +189,8 @@ def authMMe(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.mec_Acess:
-        return user
+        return Response(UserSerializer(user).data)
+        
     else:
         return None
 
