@@ -67,7 +67,7 @@ def delete_job(request):
 @api_view(['POST'])
 def nextRnd(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job)
+    jb = job.objects.get(id=app.job.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
@@ -91,7 +91,7 @@ def nextRnd(request):
 @api_view(['POST'])
 def schedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job)
+    jb = job.objects.get(id=app.job.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
@@ -117,7 +117,7 @@ def schedule(request):
 @api_view(['GET'])
 def getSchedule(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job)
+    jb = job.objects.get(id=app.job.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
@@ -188,7 +188,7 @@ def Fetch_applications(request):
 @api_view(['GET'])
 def Reject(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job)
+    jb = job.objects.get(id=app.job.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
@@ -238,7 +238,7 @@ def add_spez(request):
 @api_view(['POST'])
 def send_mail(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job)
+    jb = job.objects.get(id=app.job.id.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
