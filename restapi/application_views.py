@@ -11,9 +11,9 @@ def register_Application(request):
     user = User.objects.filter(email=email).first()
     if user==None:
         registerM(request)
-    user = User.objects.filter(email=email).first()
+        user = User.objects.filter(email=email).first()
     ass_data = ass.initial_data
-    ass_data['user'] = user
+    ass_data['user'] = user.id
     ass.initial_data=ass_data
     jb = job.objects.get(id=request.data.get("job"))
     ap = application.objects.filter(job=jb.id,user=user.id).first()
