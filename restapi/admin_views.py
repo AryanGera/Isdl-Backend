@@ -110,7 +110,7 @@ def schedule(request):
         return Response({"Schedule Updated":request.data.get("datetime")})
     else:
         return Response({"auth error":"bad auth"})
-# made by - Aryan Gera 20UCS032
+
 
 @api_view(['GET'])
 def getSchedule(request):
