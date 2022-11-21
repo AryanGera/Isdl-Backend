@@ -12,9 +12,9 @@ def register_Application(request):
     if user==None:
         registerM(request)
     user = User.objects.filter(email=email).first()
-    ass_data = ass.data
+    ass_data = ass.initial_data
     ass_data['user'] = user
-    ass.data=ass_data
+    ass.initial_data=ass_data
     jb = job.objects.get(id=request.data.get("job"))
     ap = application.objects.filter(job=jb.id,user=user.id).first()
     if ap:
@@ -38,7 +38,6 @@ def register_Application(request):
         return Response(ass.errors,400)
     if user:
         obj.user = user
-# made by - Aryan Gera 20UCS032
     else:
         return Response({"user":"not found"})
     # obj.spez_Req=spez
