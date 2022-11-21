@@ -139,7 +139,7 @@ def authCse(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.cse_Acess:
-        return Response(UserSerializer(user).data)
+        return user
     else:
         print("No user")
         return None
