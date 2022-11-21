@@ -257,7 +257,7 @@ def send_mail(request):
         return Response({"email":"send"})
     else:
         return Response({"bad":"auth"},401)
-
+#ab
 @api_view(['POST'])
 def addPost(request):
     user = authDofa(request)
