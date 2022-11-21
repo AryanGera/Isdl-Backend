@@ -36,7 +36,7 @@ def create_job(request):
         
         return Response(jb.dept.name)
     else:
-        return Response({"auth":code},401)
+        return Response({"auth":(code=='ece')},401)
 
 @api_view(['POST'])
 def delete_job(request):
