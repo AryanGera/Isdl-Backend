@@ -97,7 +97,7 @@ def authuser(request):  # returns user
         return None
     user = User.objects.get(pk=payload['id'])
     if user:
-        return Response(UserSerializer(user).data)
+        return user
     else:
 
         return None
@@ -112,7 +112,7 @@ def authDofa(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.cse_Acess and user.ece_Acess and user.cce_Acess and user.mec_Acess:
-        return Response(UserSerializer(user).data)
+        return user
     else:
         print("No user")
         return None
@@ -125,7 +125,7 @@ def authAdmin(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and (user.cse_Acess or user.ece_Acess or user.cce_Acess or user.mec_Acess):
-        return Response(UserSerializer(user).data)
+        return user
     else:
         print("No user")
         return None
@@ -145,41 +145,31 @@ def authCse(request):
         return None
 
 
-def authAdmin(request):
-    print("incse")
+def authCce(request):
     print(request.query_params.get('jwt', None))
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
-    if user and (user.cse_Acess | user.ece_Acess | user.mec_Acess | user.cce_Acess):
-        return Response(UserSerializer(user).data)
+    if user and user.cce_Acess:
+        return user
     else:
         print("No user")
         return None
 
 
-def authCce(request):
-    payload = Decode(request.query_params.get('jwt', "lol"))
-    if payload == None:
-        return None  # cannot auth user
-    user = User.objects.get(pk=payload['id'])
-    if user and user.cce_Acess:
-        return Response(UserSerializer(user).data)
-        
-    else:
-        return None
-
-
 def authEce(request):
+    print(request.query_params.get('jwt', None))
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
+        print("couldnt decode")
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.ece_Acess:
-        return Response(UserSerializer(user).data)
+        return user
     else:
+        print("No user")
         return None
 
 
@@ -189,7 +179,7 @@ def authMMe(request):
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.mec_Acess:
-        return Response(UserSerializer(user).data)
+        return user
         
     else:
         return None
