@@ -36,7 +36,7 @@ class job(models.Model):
     spez_Req= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
     createdby = models.CharField(max_length=30)
     
-    
+#a
 
 class application(models.Model):
     spez= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
