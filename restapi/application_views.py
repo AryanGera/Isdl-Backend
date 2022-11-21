@@ -35,6 +35,8 @@ def register_Application(request):
     if ass.is_valid() and valid :
         obj = ass.save()
     else:
+        if valid==False:
+            return Response({"condition":"does not fulfil requirments"},400)
         return Response(ass.errors,400)
     if user:
         obj.user = user
