@@ -164,7 +164,6 @@ def Fetch_applications(request):
     id=request.query_params.get("id")
     jb = job.objects.filter(id=id).first()
     dept_id=jb.dept.id
-    dept_id = request.data.get("dept")
     depart  = department.objects.get(id=dept_id)
     code = depart.code
     user=None
