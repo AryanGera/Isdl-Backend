@@ -53,7 +53,7 @@ def login(request):
         'id': user.id,  # type: ignore
         'name': user.name,
         'email': user.email,
-        'exp': datetime.utcnow()+timedelta(minutes=30),
+        'exp': datetime.utcnow()+timedelta(minutes=180),
         'iat': datetime.utcnow(),
         'isDofa': isDofa,
         'isCse':user.cse_Acess,
@@ -61,10 +61,6 @@ def login(request):
         'isCce':user.cce_Acess,
         'isMec':user.mec_Acess
     }
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
 
     token = jwt.encode(payload=payload, key='secret', algorithm='HS256')
     response = Response()
