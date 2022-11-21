@@ -31,7 +31,7 @@ class User(AbstractUser):
 class job(models.Model):
     dept = models.ForeignKey(department,on_delete=models.CASCADE)
     post = models.CharField(max_length=30)
-    cgpa_Req = models.DecimalField(max_digits=2,decimal_places=1,default=0)
+    cgpa_Req = models.DecimalField(max_digits=4,decimal_places=2,default=0)
     phd_Req = models.BooleanField(default=False)
     spez_Req= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
     createdby = models.CharField(max_length=30)
