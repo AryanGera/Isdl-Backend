@@ -22,7 +22,7 @@ def create_job(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         dept = department.objects.filter(id=dept_id).first()
@@ -35,7 +35,7 @@ def create_job(request):
         
         return Response(jb.dept.name)
     else:
-        return Response(User,401)
+        return Response({"auth":"error"},401)
 
 @api_view(['POST'])
 def delete_job(request):
@@ -52,14 +52,14 @@ def delete_job(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         jb.delete()
         return Response({"job":"deleted"})
         
     else:
-        return Response({"bad":"auth"})
+        return Response({"auth":"error"})
 # made by - Aryan Gera 20UCS032
 
 
@@ -78,7 +78,7 @@ def nextRnd(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         app.roundNum+=1
@@ -102,7 +102,7 @@ def schedule(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
 
@@ -128,7 +128,7 @@ def getSchedule(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         return Response({"schedule":app.schedule})
@@ -176,7 +176,7 @@ def Fetch_applications(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
@@ -199,7 +199,7 @@ def Reject(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         app.delete()
@@ -249,7 +249,7 @@ def send_mail(request):
         user = authEce(request)
     if code == 'cce':
         user = authCce(request)
-    if code == 'mme':
+    if code == 'mec':
         user = authMMe(request)
     if user:
         time=request.time
