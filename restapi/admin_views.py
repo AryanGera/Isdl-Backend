@@ -36,7 +36,7 @@ def create_job(request):
         
         return Response(jb.dept.name)
     else:
-        return Response({"auth":(code=='ece')},401)
+        return Response(User,401)
 
 @api_view(['POST'])
 def delete_job(request):
@@ -49,11 +49,11 @@ def delete_job(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         jb.delete()
@@ -75,11 +75,11 @@ def nextRnd(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         app.roundNum+=1
@@ -99,11 +99,11 @@ def schedule(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
 
@@ -125,11 +125,11 @@ def getSchedule(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         return Response({"schedule":app.schedule})
@@ -173,11 +173,11 @@ def Fetch_applications(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
@@ -196,11 +196,11 @@ def Reject(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         app.delete()
@@ -246,11 +246,11 @@ def send_mail(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         time=request.time
