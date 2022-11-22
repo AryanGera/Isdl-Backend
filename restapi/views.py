@@ -174,14 +174,16 @@ def authEce(request):
 
 
 def authMMe(request):
+    print(request.query_params.get('jwt', None))
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
+        print("couldnt decode")
         return None  # cannot auth user
     user = User.objects.get(pk=payload['id'])
     if user and user.mec_Acess:
         return user
-        
     else:
+        print("No user")
         return None
 
 @api_view(['POST'])

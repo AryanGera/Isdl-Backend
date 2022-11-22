@@ -27,7 +27,6 @@ def create_job(request):
     if user:
         dept = department.objects.filter(id=dept_id).first()
         js = JobSerializer(data=request.data)
-        
         print(dept.id)
         if js.is_valid():
             jb=js.save()
