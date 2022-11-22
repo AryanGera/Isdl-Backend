@@ -253,13 +253,14 @@ def send_mail(request):
         user = authMMe(request)
     if user:
         time=request.time
-        body="This mail is to imform you that your "
+        body=" subject - Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+app.schedule+"/nTime - "+app.schedule+"/nTime - "+app.schedule
+
         send = app.user.email
-        subject=""
+        subject="Regarding your Job Application in LNMIIT"
         sendMail(body,send,subject)
         return Response({"email":"send"})
     else:
-        return Response({"bad":"auth"},401)
+        return Response({"auth":"error"},401)
 #ab
 @api_view(['POST'])
 def addPost(request):
