@@ -253,9 +253,9 @@ def send_mail(request):
         user = authMMe(request)
     if user:
         dt = str(app.schedule.date()).strip().split("-")
-        d=dt[0]
+        y=dt[0]
         m=dt[1]
-        y=dt[2]
+        d=dt[2]
         date=d+"/"+m+"/"+y
         body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - Placeholder"
         send = app.user.email
