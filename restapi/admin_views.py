@@ -237,7 +237,7 @@ def add_spez(request):
 @api_view(['POST'])
 def send_mail(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job.id.id)
+    jb = job.objects.get(id=app.job.id)
     dept_id = jb.dept.id
     depart  = department.objects.get(id=dept_id)
     code = depart.code
