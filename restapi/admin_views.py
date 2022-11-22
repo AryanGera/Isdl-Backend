@@ -252,15 +252,19 @@ def send_mail(request):
     if code == 'mec':
         user = authMMe(request)
     if user:
-        
-        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+str(app.schedule.date())+"\nTime - "+str(app.schedule.time())+"\nLink - Placeholder"
+        dt = str(app.schedule.date()).strip().split("-")
+        d=dt[0]
+        m=dt[1]
+        y=dt[2]
+        date=d+"/"+m+"/"+y
+        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - Placeholder"
         send = app.user.email
         subject="Regarding your Job Application in LNMIIT"
-        sendMail(body,send,subject)
+        sendMail(body,send,subject=subject)
         return Response({"email":"send"})
     else:
         return Response({"auth":"error"},401)
-#ab
+
 @api_view(['POST'])
 def addPost(request):
     user = authDofa(request)
