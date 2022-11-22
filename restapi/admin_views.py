@@ -252,7 +252,7 @@ def send_mail(request):
     if code == 'mec':
         user = authMMe(request)
     if user:
-        time=request.time
+        
         body=" subject - Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+app.schedule+"/nTime - "+app.schedule+"/nTime - "+app.schedule
 
         send = app.user.email
