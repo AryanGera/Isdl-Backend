@@ -253,8 +253,7 @@ def send_mail(request):
         user = authMMe(request)
     if user:
         
-        body=" subject - Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+str(app.schedule)+"/nTime - "+str(app.schedule)+"/nTime - "+str(app.schedule)
-
+        body=" subject - Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+str(app.schedule.date)+"\nTime - "+str(app.schedule.time)+"\Link - Placeholder"
         send = app.user.email
         subject="Regarding your Job Application in LNMIIT"
         sendMail(body,send,subject)
