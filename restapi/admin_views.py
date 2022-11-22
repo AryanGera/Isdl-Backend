@@ -18,11 +18,11 @@ def create_job(request):
     if code == 'cse':
         print("auth tried")
         user = authCse(request)
-    if dept_id == 'ece':
+    if code == 'ece':
         user = authEce(request)
-    if dept_id == 'cce':
+    if code == 'cce':
         user = authCce(request)
-    if dept_id == 'mme':
+    if code == 'mme':
         user = authMMe(request)
     if user:
         dept = department.objects.filter(id=dept_id).first()
