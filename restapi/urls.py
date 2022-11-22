@@ -1,7 +1,7 @@
 from django.urls import path,re_path
 
 from .views import register,login,authuser,authCce,authCse,authEce,authMMe,grant_Perms,logout
-from .admin_views import create_job,nextRnd,schedule,Fetch_Jobs,add_dept,add_spez,delete_job,Fetch_applications,Reject,addPost,getPosts
+from .admin_views import create_job,nextRnd,schedule,Fetch_Jobs,add_dept,add_spez,delete_job,Fetch_applications,Reject,addPost,getPosts,send_mail
 from .application_views import register_Application,get_details,update_Application,delete_app
 from .dev_views import all_Jobs,all_apps,all_dept,all_spez,all_Users
 from .unauth_views import FetchAllDept,FetchAllJobs,FetchAllSpez
@@ -32,6 +32,8 @@ urlpatterns = [
     path('fetchAllJobs',FetchAllJobs),
     path('fetchAllDept',FetchAllDept),
     path('fetchAllSpez',FetchAllSpez),
-    path('getDetails',get_details)
+    path('getDetails',get_details),
+    path('sendMail',send_mail)
+
 
 ]
