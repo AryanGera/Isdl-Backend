@@ -1,9 +1,9 @@
 
-# made by - Aryan Gera 20UCS032
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,UserSerializer,dept_Serializer,spez_Serializer
-from .models import job,User,application,spez,department
+from .serializers import JobSerializer,application_Serializer,UserLoginSerializer,UserSerializer,dept_Serializer,spez_Serializer,post_Serializer
+from .models import job,User,application,spez,department,post
 from .views import register,authuser
 
 @api_view(['GET'])
@@ -16,7 +16,7 @@ def all_apps(request):
     jbs = application.objects.all()
     return Response(application_Serializer(jbs,many=True).data)
     
-# made by - Aryan Gera 20UCS032
+
 
 @api_view(['GET'])
 def all_Users(request):
@@ -33,3 +33,7 @@ def all_spez(request):
     jbs = spez.objects.all()
     return Response(spez_Serializer(jbs,many=True).data)
 
+@api_view(['GET'])
+def all_post(request):
+    jbs = post.objects.all()
+    return Response(post_Serializer(jbs,many=True).data)
