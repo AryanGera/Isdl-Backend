@@ -291,8 +291,8 @@ def getPosts(request):
 def delPost(request):
     user = authDofa(request)
     if user:
-        post = post.objects.filter(id=request.data.get("id")).first()
-        post.delete()
+        pst = post.objects.filter(id=request.data.get("id")).first()
+        pst.delete()
         return Response({"post":"deleted"})
     else:
         return Response({"autherror":"No Admin Found"})
