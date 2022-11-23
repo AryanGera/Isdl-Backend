@@ -46,8 +46,12 @@ def register_Application(request):
     jb = job.objects.filter(id=request.data.get("job")).first()
     obj.job = jb
     hs = hireability_score(request)
-    obj.hireScore = hs
-    obj.save()
+    obj.hireScore = round(hs,2)
+    os = application_Serializer(obj)
+    if os.is_valid():
+        obj.save()
+    else:
+        return Response(os.errors,400)
     return Response({"user":"registered"})
 
 def hireability_score(request):
