@@ -287,7 +287,7 @@ def getPosts(request):
     else:
         return Response({"autherror":"No Admin Found"})
 
-@api_view(['GET'])
+@api_view(['POST'])
 def delPost(request):
     user = authDofa(request)
     if user:
