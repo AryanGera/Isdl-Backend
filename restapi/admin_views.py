@@ -159,7 +159,7 @@ def Fetch_Jobs(request):
         jobs|=job.objects.filter(dept=department.objects.filter(code="mec").first())
     user=None
     if len(jobs):
-        return Response({"success":str(JobSerializer(jobs,many=True).data)})
+        return Response(JobSerializer(jobs,many=True).data)
     else:
         return Response({"error":"Admin Authorization Failure"},401)
 
@@ -184,7 +184,7 @@ def Fetch_applications(request):
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
-        return Response({"success":str(application_Serializer(cand,many=True).data)})
+        return Response(application_Serializer(cand,many=True).data)
     else:
         return Response({"error":"Admin Authorization Failure"},401)
 
@@ -232,7 +232,7 @@ def add_spez(request):
     ss = spez_Serializer(data=request.data)
     if user and ss.is_valid():
         ss.save()
-        return Response({"success":str(ss.data)})
+        return Response(ss.data)
     else:
         if user:
             return Response({"error":str(ss.errors)},400)
@@ -288,7 +288,7 @@ def getPosts(request):
     user = authAdmin(request)
     if user:
         posts = post.objects.all()
-        return Response({"success":str(post_Serializer(posts, many=True).data)})
+        return Response(post_Serializer(posts, many=True).data)
     else:
         return Response({"error":"Admin Authorization Failure"},401)
 

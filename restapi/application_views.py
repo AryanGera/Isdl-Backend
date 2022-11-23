@@ -83,7 +83,7 @@ def get_details(request):
     if user:
         app = application.objects.filter(user=user.id)
         jb=job.objects.all()
-        return Response({"success":str(application_Serializer(app,many=True).data)})
+        return Response(application_Serializer(app,many=True).data)
     else:
         return Response({"error":"User Authorization Failure"},401)
 
