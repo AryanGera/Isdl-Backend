@@ -67,7 +67,7 @@ def hireability_score(request):
 def get_details(request):
     user = authuser(request)
     if user:
-        app = application.objects.filter(user=user.data.get("id"))
+        app = application.objects.filter(user=user.id)
         jb=job.objects.all()
         return Response(application_Serializer(app,many=True).data)
     else:

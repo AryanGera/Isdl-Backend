@@ -93,4 +93,4 @@ class application(models.Model):
     name = models.CharField(max_length=50,null=True)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
-
+    #meet = models.URLField()

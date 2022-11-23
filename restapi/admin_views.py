@@ -257,7 +257,7 @@ def send_mail(request):
         m=dt[1]
         d=dt[2]
         date=d+"/"+m+"/"+y
-        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - Placeholder"
+        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - "#+str(app.meet)
         send = app.user.email
         subject="Regarding your Job Application in LNMIIT"
         sendMail(body,send,subject=subject)
@@ -272,7 +272,7 @@ def addPost(request):
         ps = post_Serializer(data=request.data)
         if ps.is_valid():
             ps.save()
-            return Response(ps.data)
+            return Response({"post":"created"})
         else:
             return Response(ps.errors,400)
     else:
@@ -287,4 +287,11 @@ def getPosts(request):
     else:
         return Response({"autherror":"No Admin Found"})
 
-
+# @api_view(['GET'])
+# def delPost(request):
+#     user = authDofa(request)
+#     if user:
+#         post = post.objects.filter(id=request.data.get("id")).first()
+#         return Response({"post":"deleted"})
+#     else:
+#         return Response({"autherror":"No Admin Found"})
