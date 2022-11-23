@@ -67,11 +67,13 @@ def hireability_score(request):
     pub= float(request.data.get("publications"))
     exp= float(request.data.get("experiance"))
     cpi= float(request.data.get("cgpa"))
-    normCit = cit/50
-    normPub = pub/20
-    normExp = exp/15
+    normCit = cit/200
+    normCit*=4
+    normPub = pub/50
+    normPub *=2
+    normExp = exp/30
     normCpi = cpi/10
-    avg = (normCpi+normPub+normCit+normExp)/4
+    avg = (normCpi+normPub+normCit+normExp)/8
     score = avg*10
     return score
 
@@ -89,23 +91,24 @@ def get_details(request):
 @api_view(['POST'])
 def update_Application(request):
     user=authuser(request)
-    ap = application.objects.filter(user=user.data.get("id"))
-    app = ap.first()
-    if user and ap:
-        dt = request.data
-        ap.update(
-            experiance=dt.get("experiance")if (dt.get("experiance")) else app.experiance,
-            citations=dt.get("citations")if (dt.get("citations")) else app.citations,
-            publications = dt.get("publications")if (dt.get("publications")) else app.publications,
-            country =dt.get("country")if (dt.get("country")) else app.country, 
-            city = dt.get("city")if (dt.get("city")) else app.city,
-            state = dt.get("state")if (dt.get("state")) else app.state,
-            district = dt.get("district")if (dt.get("district")) else app.district,
-            postal =dt.get("postal")if (dt.get("postal")) else app.postal,
-            pincode = dt.get("pincode")if (dt.get("pincode")) else app.pincode,
-            mob_num =dt.get("mob_num")if (dt.get("mob_num")) else app.mob_num,
-        )
-        return Response({"done":"done"})
+    apps = application.objects.filter(user=user.data.get("id"))
+    
+    if user and apps:
+        for ap in apps:
+            dt = request.data
+            ap.update(
+                experiance=dt.get("experiance")if (dt.get("experiance")) else app.experiance,
+                citations=dt.get("citations")if (dt.get("citations")) else app.citations,
+                publications = dt.get("publications")if (dt.get("publications")) else app.publications,
+                country =dt.get("country")if (dt.get("country")) else app.country, 
+                city = dt.get("city")if (dt.get("city")) else app.city,
+                state = dt.get("state")if (dt.get("state")) else app.state,
+                district = dt.get("district")if (dt.get("district")) else app.district,
+                postal =dt.get("postal")if (dt.get("postal")) else app.postal,
+                pincode = dt.get("pincode")if (dt.get("pincode")) else app.pincode,
+                mob_num =dt.get("mob_num")if (dt.get("mob_num")) else app.mob_num,
+            )
+            return Response({"done":"done"})
     else:
         return Response({"bad":"auth"})
 
