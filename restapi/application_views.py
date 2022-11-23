@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from .serializers import JobSerializer,application_Serializer,UserLoginSerializer
 from .models import job,User,application,spez
 from .views import register,authuser,registerM
+from rest_framework import serializers
 
 @api_view(['POST'])
 def register_Application(request):
@@ -48,11 +49,11 @@ def register_Application(request):
     obj.job = jb
     hs = hireability_score(request)
     obj.hireScore = round(hs,2)
-    os = application_Serializer(obj)
-    if os.is_valid():
+    # os = application_Serializer(obj)
+    try:
         obj.save()
-    else:
-        return Response(os.errors,400)
+    except serializers.ValidationError as e:
+        return Response(e)
     return Response({"user":"registered"})
 
 def hireability_score(request):
