@@ -241,12 +241,7 @@ def add_spez(request):
 
 @api_view(['POST'])
 def send_mail(request):
-    updateMeetLink(request)
-    app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job.id)
-    dept_id = jb.dept.id
-    depart  = department.objects.get(id=dept_id)
-    code = depart.code
+    
     user=None
     if code == 'cse':
         print("auth tried")
@@ -258,6 +253,12 @@ def send_mail(request):
     if code == 'mec':
         user = authMMe(request)
     if user:
+        updateMeetLink(request)
+        app=application.objects.filter(id=request.data.get("id")).first()
+        jb = job.objects.get(id=app.job.id)
+        dept_id = jb.dept.id
+        depart  = department.objects.get(id=dept_id)
+        code = depart.code
         dt = str(app.schedule.date()).strip().split("-")
         y=dt[0]
         m=dt[1]
@@ -306,23 +307,6 @@ def delPost(request):
 
 def updateMeetLink(request):
     app=application.objects.filter(id=request.data.get("id")).first()
-    jb = job.objects.get(id=app.job.id)
-    dept_id = jb.dept.id
-    depart  = department.objects.get(id=dept_id)
-    code = depart.code
-    user=None
-    if code == 'cse':
-        print("auth tried")
-        user = authCse(request)
-    if code == 'ece':
-        user = authEce(request)
-    if code == 'cce':
-        user = authCce(request)
-    if code == 'mec':
-        user = authMMe(request)
-    if user:
-        app.meet = request.data.get("meet")
-        app.save()
-        return 1
-    else:
-        return 0
+    app.meet = request.data.get("meet")
+    app.save()
+    
