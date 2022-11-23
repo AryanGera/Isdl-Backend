@@ -68,12 +68,14 @@ def hireability_score(request):
     exp= float(request.data.get("experiance"))
     cpi= float(request.data.get("cgpa"))
     normCit = cit/200
-    normCit*=4
+    normCit*=1
     normPub = pub/50
-    normPub *=2
+    normPub *=3
     normExp = exp/30
+    normExp*=3
     normCpi = cpi/10
-    avg = (normCpi+normPub+normCit+normExp)/8
+    normCpi *=4
+    avg = (normCpi+normPub+normCit+normExp)/11
     score = avg*10
     return score
 
