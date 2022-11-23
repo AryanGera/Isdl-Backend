@@ -21,15 +21,15 @@ class UserLoginSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
-# made by - Aryan Gera 20UCS032
+
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model=job
         fields='__all__'
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
+
+
+
 
 class application_Serializer(serializers.ModelSerializer):
     class Meta:

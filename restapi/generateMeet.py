@@ -2,18 +2,18 @@ import time
 import smtplib
 from email.mime.text import MIMEText
 i=0
-#body of the mail
+
 def sendMail(body,toaddr,subject):
     msg=MIMEText(body)
-    fromaddr= "hepi.monke@gmail.com" #the adress from which mail is sent # give acess to less secure apps
-    # toaddr=""  # mail sent to
-    msg["From"]=fromaddr     #### store the adresses into msg object
+    fromaddr= "hepi.monke@gmail.com" 
+    
+    msg["From"]=fromaddr     
     msg["To"]=toaddr
     msg["Subject"]=subject
-    server=smtplib.SMTP("smtp.gmail.com",587)   ###connect to gmail.com server using 587 port number
-    server.starttls()                   #put the smtp connection in TLS mode
-    server.login(fromaddr,"miuzvrcqwxcvviis")  #login to your the server with the correct password
-    server.send_message(msg) #send the message to the server
+    server=smtplib.SMTP("smtp.gmail.com",587)   
+    server.starttls()                   
+    server.login(fromaddr,"miuzvrcqwxcvviis")  
+    server.send_message(msg) 
     print("mail sent")
-    server.quit() #close the connection
+    server.quit() 
     print("sleep")

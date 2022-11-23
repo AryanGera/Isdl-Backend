@@ -25,9 +25,6 @@ def registerMul(request):
     serializer = UserLoginSerializer(data=request.data,many=True)
     serializer.is_valid(raise_exception=True)
     serializer.save()
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
     return Response(serializer.data)
 
 def registerM(request):
@@ -51,7 +48,7 @@ def login(request):
         isDofa = True
     
     payload = {
-        'id': user.id,  # type: ignore
+        'id': user.id,  
         'name': user.name,
         'email': user.email,
         'exp': datetime.utcnow()+timedelta(minutes=180),
@@ -74,7 +71,7 @@ def login(request):
 
 @api_view(['POST'])
 def grant_Perms(request):
-    # ul = UserSerializer(data=request.data)
+    
     email = request.data.get("email")
     user = User.objects.filter(email=email).first()
     user.cse_Acess = (request.data.get("cse") == "True")
@@ -93,7 +90,7 @@ def Decode(token):
         return None
 
 
-def authuser(request):  # returns user
+def authuser(request):  
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         return None
@@ -111,7 +108,7 @@ def authDofa(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and user.cse_Acess and user.ece_Acess and user.cce_Acess and user.mec_Acess:
         return user
@@ -124,7 +121,7 @@ def authAdmin(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and (user.cse_Acess or user.ece_Acess or user.cce_Acess or user.mec_Acess):
         return user
@@ -138,7 +135,7 @@ def authCse(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and user.cse_Acess:
         return user
@@ -152,7 +149,7 @@ def authCce(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and user.cce_Acess:
         return user
@@ -166,7 +163,7 @@ def authEce(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and user.ece_Acess:
         return user
@@ -180,7 +177,7 @@ def authMMe(request):
     payload = Decode(request.query_params.get('jwt', "lol"))
     if payload == None:
         print("couldnt decode")
-        return None  # cannot auth user
+        return None  
     user = User.objects.get(pk=payload['id'])
     if user and user.mec_Acess:
         return user

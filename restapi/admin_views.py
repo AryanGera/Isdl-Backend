@@ -60,7 +60,7 @@ def delete_job(request):
         
     else:
         return Response({"auth":"error"})
-# made by - Aryan Gera 20UCS032
+
 
 
 @api_view(['POST'])
@@ -158,7 +158,7 @@ def Fetch_Jobs(request):
         return Response(JobSerializer(jobs,many=True).data)
     else:
         return Response({"auth error":"bad_auth"})
-# made by - Aryan Gera 20UCS032
+
 
 @api_view(['GET'])
 def Fetch_applications(request):
@@ -257,7 +257,7 @@ def send_mail(request):
         m=dt[1]
         d=dt[2]
         date=d+"/"+m+"/"+y
-        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - "#+str(app.meet)
+        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - "
         send = app.user.email
         subject="Regarding your Job Application in LNMIIT"
         sendMail(body,send,subject=subject)

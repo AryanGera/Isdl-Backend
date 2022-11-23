@@ -10,9 +10,9 @@ from django.db.models.query import QuerySet
 def FetchAllJobs(request):
     jobs = job.objects.all()
     return Response(JobSerializer(jobs, many=True).data)
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
-# made by - Aryan Gera 20UCS032
+
+
+
 
 @api_view(['GET'])
 def FetchAllDept(request):
