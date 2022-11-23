@@ -88,28 +88,28 @@ def get_details(request):
         return Response({"bad":"auth"})
 
 #if anything breaks check this first
-@api_view(['POST'])
-def update_Application(request):
-    user=authuser(request)
-    apps = application.objects.filter(user=user.id)
-    if user and apps:
-        for ap in apps:
-            dt = request.data
-            ap.update(
-                experiance=dt.get("experiance")if (dt.get("experiance")) else ap.experiance,
-                citations=dt.get("citations")if (dt.get("citations")) else ap.citations,
-                publications = dt.get("publications")if (dt.get("publications")) else ap.publications,
-                country =dt.get("country")if (dt.get("country")) else ap.country, 
-                city = dt.get("city")if (dt.get("city")) else ap.city,
-                state = dt.get("state")if (dt.get("state")) else ap.state,
-                district = dt.get("district")if (dt.get("district")) else ap.district,
-                postal =dt.get("postal")if (dt.get("postal")) else ap.postal,
-                pincode = dt.get("pincode")if (dt.get("pincode")) else ap.pincode,
-                mob_num =dt.get("mob_num")if (dt.get("mob_num")) else ap.mob_num,
-            )
-            return Response({"done":"done"})
-    else:
-        return Response({"bad":"auth"})
+# @api_view(['POST'])
+# def update_Application(request):
+#     user=authuser(request)
+#     apps = application.objects.filter(user=user.id)
+#     if user and apps:
+#         # for ap in apps:
+#         dt = request.data
+#         apps.update(
+#             experiance=dt.get("experiance")if (dt.get("experiance")) else ap.experiance,
+#             citations=dt.get("citations")if (dt.get("citations")) else ap.citations,
+#             publications = dt.get("publications")if (dt.get("publications")) else ap.publications,
+#             country =dt.get("country")if (dt.get("country")) else ap.country, 
+#             city = dt.get("city")if (dt.get("city")) else ap.city,
+#             state = dt.get("state")if (dt.get("state")) else ap.state,
+#             district = dt.get("district")if (dt.get("district")) else ap.district,
+#             postal =dt.get("postal")if (dt.get("postal")) else ap.postal,
+#             pincode = dt.get("pincode")if (dt.get("pincode")) else ap.pincode,
+#             mob_num =dt.get("mob_num")if (dt.get("mob_num")) else ap.mob_num,
+#         )
+#         return Response({"done":"done"})
+#     else:
+#         return Response({"bad":"auth"})
 
 
 @api_view(['POST'])
