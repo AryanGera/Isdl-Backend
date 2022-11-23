@@ -87,7 +87,7 @@ def nextRnd(request):
     if user:
         app.roundNum+=1
         app.save()
-        return Response({"success":"Round updated to "+app.roundNum})
+        return Response({"success":"Round updated to "+str(app.roundNum)})
     else:
         return Response({"error":"Admin Authorization Failure"},401)
 
