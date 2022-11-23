@@ -291,7 +291,7 @@ def getPosts(request):
 def delPost(request):
     user = authDofa(request)
     if user:
-        pst = post.objects.filter(id=request.data.get("id")).first()
+        pst = post.objects.filter(name=request.data.get("name")).first()
         pst.delete()
         return Response({"post":"deleted"})
     else:
