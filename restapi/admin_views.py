@@ -287,11 +287,12 @@ def getPosts(request):
     else:
         return Response({"autherror":"No Admin Found"})
 
-# @api_view(['GET'])
-# def delPost(request):
-#     user = authDofa(request)
-#     if user:
-#         post = post.objects.filter(id=request.data.get("id")).first()
-#         return Response({"post":"deleted"})
-#     else:
-#         return Response({"autherror":"No Admin Found"})
+@api_view(['GET'])
+def delPost(request):
+    user = authDofa(request)
+    if user:
+        post = post.objects.filter(id=request.data.get("id")).first()
+        post.delete()
+        return Response({"post":"deleted"})
+    else:
+        return Response({"autherror":"No Admin Found"})
