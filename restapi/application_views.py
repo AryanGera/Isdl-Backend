@@ -48,7 +48,7 @@ def register_Application(request):
     obj.job = jb
     hs = hireability_score(request)
     obj.hireScore = round(hs,2)
-    os = application_Serializer(data=obj.data)
+    os = application_Serializer(data=obj)
     if os.is_valid():
         obj.save()
     else:
