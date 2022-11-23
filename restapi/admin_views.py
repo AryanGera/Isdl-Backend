@@ -35,7 +35,7 @@ def create_job(request):
         
         return Response(jb.dept.name)
     else:
-        return Response({"auth":"error"},401)
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['POST'])
 def delete_job(request):
@@ -56,10 +56,11 @@ def delete_job(request):
         user = authMMe(request)
     if user:
         jb.delete()
-        return Response({"job":"deleted"})
+        return Response({"success":"Job deleted"})
         
     else:
-        return Response({"auth":"error"})
+        return Response({"error":"Admin Authorization Failure"},401)
+        
 
 
 
@@ -83,9 +84,9 @@ def nextRnd(request):
     if user:
         app.roundNum+=1
         app.save()
-        return Response({"Round updated to":app.roundNum})
+        return Response({"success":"Round updated to "+app.roundNum})
     else:
-        return Response({"auth error":"bad auth"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['POST'])
 def schedule(request):
@@ -108,9 +109,9 @@ def schedule(request):
 
         app.schedule = request.data.get("datetime")
         app.save()
-        return Response({"Schedule Updated":request.data.get("datetime")})
+        return Response({"success":"Schedule Updated "+request.data.get("datetime")})
     else:
-        return Response({"auth error":"bad auth"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 
 @api_view(['GET'])
@@ -131,9 +132,9 @@ def getSchedule(request):
     if code == 'mec':
         user = authMMe(request)
     if user:
-        return Response({"schedule":app.schedule})
+        return Response({"success":"updated schedule -"+str(app.schedule)})
     else:
-        return Response({"auth error":"bad auth"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['GET'])
 def Fetch_Jobs(request):
@@ -155,9 +156,9 @@ def Fetch_Jobs(request):
         jobs|=job.objects.filter(dept=department.objects.filter(code="mec").first())
     user=None
     if len(jobs):
-        return Response(JobSerializer(jobs,many=True).data)
+        return Response({"success":str(JobSerializer(jobs,many=True).data)})
     else:
-        return Response({"auth error":"bad_auth"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 
 @api_view(['GET'])
@@ -180,9 +181,9 @@ def Fetch_applications(request):
         user = authMMe(request)
     if user:
         cand = application.objects.filter(job=jb)
-        return Response(application_Serializer(cand,many=True).data)
+        return Response({"success":str(application_Serializer(cand,many=True).data)})
     else:
-        return Response({"auth error":"bad auth"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['GET'])
 def Reject(request):
@@ -203,9 +204,10 @@ def Reject(request):
         user = authMMe(request)
     if user:
         app.delete()
-        return Response({"Succesful Action":"Application Deleted"})
+        return Response({"success":"Application Deleted"})
     else:
-        return Response({"auth error":"bad auth"},401)
+        return Response({"error":"Admin Authorization Failure"},401)
+
 
 @api_view(['POST'])
 def add_dept(request):
@@ -218,7 +220,7 @@ def add_dept(request):
         if user:
             return Response(ds.errors,400)
         else:
-            return Response({"dofa":"auth error no dofa found"},401)
+            return Response({"error":"DOFA Authorization Failure"},401)
 
 
 @api_view(['POST'])
@@ -227,12 +229,12 @@ def add_spez(request):
     ss = spez_Serializer(data=request.data)
     if user and ss.is_valid():
         ss.save()
-        return Response(ss.data)
+        return Response({"success":str(ss.data)})
     else:
         if user:
-            return Response(ss.errors,400)
+            return Response({"error":str(ss.errors)},400)
         else:
-            return Response({"dofa":"auth error no dofa found"},401)
+            return Response({"error":"DOFA Authorization Failure"},401)
 
 @api_view(['POST'])
 def send_mail(request):
@@ -257,13 +259,13 @@ def send_mail(request):
         m=dt[1]
         d=dt[2]
         date=d+"/"+m+"/"+y
-        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - "
+        body="Dear "+app.name+",\nWe are glad to inform you that your application matches our requirements and we would like to know you better. Following are the details for the online meet session.\nDate - "+date+"\nTime - "+str(app.schedule.time())+"\nLink - "+app.meet
         send = app.user.email
         subject="Regarding your Job Application in LNMIIT"
         sendMail(body,send,subject=subject)
-        return Response({"email":"send"})
+        return Response({"success":"email send"})
     else:
-        return Response({"auth":"error"},401)
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['POST'])
 def addPost(request):
@@ -272,20 +274,20 @@ def addPost(request):
         ps = post_Serializer(data=request.data)
         if ps.is_valid():
             ps.save()
-            return Response({"post":"created"})
+            return Response({"success":"post created"})
         else:
-            return Response(ps.errors,400)
+            return Response({"error":str(ps.errors)},400)
     else:
-        return Response({"dofa":"auth error no dofa found"},401)
+            return Response({"error":"DOFA Authorization Failure"},401)
     
 @api_view(['GET'])
 def getPosts(request):
     user = authAdmin(request)
     if user:
         posts = post.objects.all()
-        return Response(post_Serializer(posts, many=True).data)
+        return Response({"success":str(post_Serializer(posts, many=True).data)})
     else:
-        return Response({"autherror":"No Admin Found"})
+        return Response({"error":"Admin Authorization Failure"},401)
 
 @api_view(['POST'])
 def delPost(request):
@@ -293,6 +295,6 @@ def delPost(request):
     if user:
         pst = post.objects.filter(name=request.data.get("name")).first()
         pst.delete()
-        return Response({"post":"deleted"})
+        return Response({"success":"post deleted"})
     else:
-        return Response({"autherror":"No Admin Found"})
+            return Response({"error":"DOFA Authorization Failure"},401)

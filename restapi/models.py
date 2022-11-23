@@ -5,7 +5,7 @@ from random import choices
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+# Create your models here.
 class post(models.Model):
     name = models.CharField(max_length=100)
     
@@ -36,7 +36,7 @@ class job(models.Model):
     spez_Req= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
     createdby = models.CharField(max_length=30)
     
-
+#a
 
 class application(models.Model):
     spez= models.ForeignKey(spez,on_delete=models.DO_NOTHING)
@@ -88,9 +88,9 @@ class application(models.Model):
     postal = models.CharField(max_length=200)
     pincode = models.CharField(max_length=6)
     mob_num = models.CharField(max_length=10)
-    hireScore = models.DecimalField(max_digits=3,decimal_places=2,null=True)
+    hireScore = models.DecimalField(max_digits=7,decimal_places=2,null=True)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=50,null=True)
     schedule = models.DateTimeField(null=True)
     roundNum = models.PositiveSmallIntegerField(default=1)
-    
+    meet = models.URLField()

@@ -25,7 +25,7 @@ def register_Application(request):
     ap = application.objects.filter(job=jb.id,user=user.id).first()
     if ap:
 
-        return Response({"bad input":"cannot fill application for same job twice"},400)
+        return Response({"error":"cannot fill application for same job twice"},400)
     req_spez = jb.spez_Req
     inSpez = spez.objects.get(id=request.data.get("spez"))
     print(inSpez)
@@ -43,12 +43,12 @@ def register_Application(request):
         obj = ass.save()
     else:
         if valid==False:
-            return Response({"condition":"does not fulfil requirments"},400)
-        return Response({"inputError":str(ass.errors)},400)
+            return Response({"error":"does not fulfil requirments"},400)
+        return Response({"error":str(ass.errors)},400)
     if user:
         obj.user = user
     else:
-        return Response({"user":"not found"})
+        return Response({"error":"User Authorization Failure"},401)
     
     jb = job.objects.filter(id=request.data.get("job")).first()
     obj.job = jb
@@ -59,8 +59,8 @@ def register_Application(request):
         obj.save()
     except ValidationError as e:
         obj.delete()
-        return Response(e)
-    return Response({"user":"registered"})
+        return Response({"error":str(e)})
+    return Response({"success":"user registered"})
 
 def hireability_score(request):
     cit = float(request.data.get("citations"))
@@ -83,9 +83,9 @@ def get_details(request):
     if user:
         app = application.objects.filter(user=user.id)
         jb=job.objects.all()
-        return Response(application_Serializer(app,many=True).data)
+        return Response({"success":str(application_Serializer(app,many=True).data)})
     else:
-        return Response({"bad":"auth"})
+        return Response({"error":"User Authorization Failure"},401)
 
 
 @api_view(['POST'])
@@ -106,30 +106,9 @@ def update_Application(request):
             pincode = dt.get("pincode"),
             mob_num =dt.get("mob_num"),
         )
-        return Response({"done":"done"})
+        return Response({"success":"application updated"})
     else:
-        return Response({"bad":"auth"})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return Response({"error":"User Authorization Failure"},401)
 
 
 @api_view(['POST'])
@@ -137,11 +116,6 @@ def delete_app(request):
     user = authuser(request)
     if(user):
         application.objects.filter(user=user.id).delete()
-        return Response({"deleted":"yep"})
+        return Response({"success":"application deleted"})
     else:
-        return Response({"bad":"auth"})
-
-
-    
-    
-    
+        return Response({"error":"User Authorization Failure"},401)

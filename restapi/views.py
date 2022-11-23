@@ -189,5 +189,6 @@ def authMMe(request):
 def logout(request):
     response=Response()
     response.delete_cookie('jwt')
-    response.data={"message":"success"}
+    response.data={"success":"logout successful"}
     return response
+    
