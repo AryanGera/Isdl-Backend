@@ -92,7 +92,6 @@ def get_details(request):
 def update_Application(request):
     user=authuser(request)
     apps = application.objects.filter(user=user.data.get("id"))
-    
     if user and apps:
         for ap in apps:
             dt = request.data
