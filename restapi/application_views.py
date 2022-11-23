@@ -1,9 +1,14 @@
 from rest_framework.response import Response
+
 from rest_framework.decorators import api_view
 from .serializers import JobSerializer,application_Serializer,UserLoginSerializer
 from .models import job,User,application,spez
 from .views import register,authuser,registerM
 from rest_framework import serializers
+from django.core.exceptions import ValidationError
+
+from django.db import models
+
 
 @api_view(['POST'])
 def register_Application(request):
@@ -52,7 +57,7 @@ def register_Application(request):
     # os = application_Serializer(obj)
     try:
         obj.save()
-    except serializers.ValidationError as e:
+    except ValidationError as e:
         obj.delete()
         return Response(e)
     return Response({"user":"registered"})
