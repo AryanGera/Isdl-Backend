@@ -25,6 +25,9 @@ def create_job(request):
     if code == 'mec':
         user = authMMe(request)
     if user:
+        jb =job.objects.filter(dept=dept_id,post=request.data.get("post"),spez_Req=request.data.get("spez_Req"))
+        if jb:
+            return Response({"error":"Job with these specifications already exists"})
         dept = department.objects.filter(id=dept_id).first()
         js = JobSerializer(data=request.data)
         print(dept.id)
