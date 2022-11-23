@@ -43,12 +43,13 @@ def login(request):
     password = request.data['password']
     user = User.objects.filter(email=email).first()
     isDofa =False
-    if (user.cse_Acess and user.cce_Acess and user.ece_Acess and user.mec_Acess):
-        isDofa = True
     if user == None:
         raise AuthenticationFailed('User not found')
     if user.check_password(password) == False:
         raise AuthenticationFailed("incorrect password")
+    if (user.cse_Acess and user.cce_Acess and user.ece_Acess and user.mec_Acess):
+        isDofa = True
+    
     payload = {
         'id': user.id,  # type: ignore
         'name': user.name,
@@ -68,6 +69,7 @@ def login(request):
     decode = jwt.decode(token, 'secret', algorithms=['HS256'])
     response.data = {'jwt': token}
     return response
+
 
 
 @api_view(['POST'])
