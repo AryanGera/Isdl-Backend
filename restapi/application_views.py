@@ -91,7 +91,7 @@ def get_details(request):
 @api_view(['POST'])
 def update_Application(request):
     user=authuser(request)
-    apps = application.objects.filter(user=user.data.get("id"))
+    apps = application.objects.filter(user=user.id)
     if user and apps:
         for ap in apps:
             dt = request.data
@@ -116,7 +116,7 @@ def update_Application(request):
 def delete_app(request):
     user = authuser(request)
     if(user):
-        application.objects.filter(user=user.data.get("id")).delete()
+        application.objects.filter(user=user.id).delete()
         return Response({"deleted":"yep"})
     else:
         return Response({"bad":"auth"})
