@@ -44,7 +44,7 @@ def register_Application(request):
     else:
         if valid==False:
             return Response({"condition":"does not fulfil requirments"},400)
-        return Response(ass.errors,400)
+        return Response({"inputError":str(ass.errors)},400)
     if user:
         obj.user = user
     else:
