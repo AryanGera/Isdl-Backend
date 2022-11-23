@@ -18,7 +18,8 @@ def register_Application(request):
     jb = job.objects.get(id=request.data.get("job"))
     ap = application.objects.filter(job=jb.id,user=user.id).first()
     if ap:
-        return Response({"bad input":"cannot fill application for same job twice"})
+
+        return Response({"bad input":"cannot fill application for same job twice"},400)
     req_spez = jb.spez_Req
     inSpez = spez.objects.get(id=request.data.get("spez"))
     print(inSpez)
@@ -47,7 +48,7 @@ def register_Application(request):
     obj.job = jb
     hs = hireability_score(request)
     obj.hireScore = round(hs,2)
-    os = application_Serializer(obj)
+    os = application_Serializer(data=obj.data)
     if os.is_valid():
         obj.save()
     else:
