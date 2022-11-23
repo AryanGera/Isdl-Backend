@@ -53,6 +53,7 @@ def register_Application(request):
     try:
         obj.save()
     except serializers.ValidationError as e:
+        obj.delete()
         return Response(e)
     return Response({"user":"registered"})
 
