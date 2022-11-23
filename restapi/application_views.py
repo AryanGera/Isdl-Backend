@@ -72,10 +72,10 @@ def hireability_score(request):
     normPub = pub/50
     normPub *=3
     normExp = exp/30
-    normExp*=3
+    normExp*=5
     normCpi = cpi/10
-    normCpi *=4
-    avg = (normCpi+normPub+normCit+normExp)/11
+    normCpi *=5
+    avg = (normCpi+normPub+normCit+normExp)/14
     score = avg*10
     return score
 
