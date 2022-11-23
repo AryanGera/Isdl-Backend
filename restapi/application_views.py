@@ -105,6 +105,7 @@ def update_Application(request):
             postal =dt.get("postal"),
             pincode = dt.get("pincode"),
             mob_num =dt.get("mob_num"),
+            hireScore=hireability_score(request)
         )
         return Response({"success":"application updated"})
     else:
