@@ -115,10 +115,20 @@ def update_Application(request):
 
 
 @api_view(['POST'])
-def delete_app(request):
+def delete_appU(request):
     user = authuser(request)
+    # app = application.objects.filter(id=request.data.get("id"))
     if(user):
         application.objects.filter(user=user.id).delete()
         return Response({"success":"application deleted"})
     else:
         return Response({"error":"User Authorization Failure"},401)
+
+@api_view(['POST'])
+def delete_app(request):
+    app = application.objects.filter(id=request.data.get("id"))
+    app.delete()
+    return Response({"app":"deleted"})
+
+
+
