@@ -127,9 +127,9 @@ def delete_appU(request):
 @api_view(['POST'])
 def delete_app(request):
     app = application.objects.filter(id=request.data.get("id"))
-    user = User.objects.filter(id=app.user)
+    # user = User.objects.filter(id=app.user)
     app.delete()
-    user.delete()
+    # user.delete()
     return Response({"app":"deleted"})
 
 
