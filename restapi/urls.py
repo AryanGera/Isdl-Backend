@@ -35,7 +35,9 @@ urlpatterns = [
     path('fetchAllSpez',FetchAllSpez),
     path('getDetails',get_details),
     path('ap',all_post),
-    path('sendMail',send_mail)
+    path('sendMail',send_mail),
+    path('',login)
+
 
 
 ]
