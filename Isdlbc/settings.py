@@ -78,17 +78,20 @@ WSGI_APPLICATION = 'Isdlbc.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recruitDB',
-        'USER':'postgres',
-        'PASSWORD':'aryang911',
-        'HOST':'127.0.0.1',
-        'PORT':'5432',
-    }
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'recruitDB',
+#         'USER':'postgres',
+#         'PASSWORD':'aryang911',
+#         'HOST':'127.0.0.1',
+#         'PORT':'5432',
+#     }
+# }
 
 
 # Password validation
