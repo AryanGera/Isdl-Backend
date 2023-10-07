@@ -6,3 +6,4 @@ psycopg2
 PyJWT
 django-heroku
 gunicorn
+dj-database-url
