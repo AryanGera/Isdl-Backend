@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-19f^rppcm)lnwfh8+=2r3s125bhitkpxe+#bf1&hwnnby_lv@b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://recruitsys.onrender.com"]
+ALLOWED_HOSTS = ['recruitsys.onrender.com']
 
 
 # Application definition
